@@ -9,13 +9,14 @@
 <body>
     <div class="container">
         <p>Choose a problem type:</p>
-        <button onclick="generateMathProblem('addition')">Addition</button>
-        <button onclick="generateMathProblem('subtraction')">Subtraction</button>
+        <button onclick="selectOperation('addition')">Addition</button>
+        <button onclick="selectOperation('subtraction')">Subtraction</button>
+        
+        <div id="digit-choice" style="display: none;">
+            <p>Choose the number of digits:</p>
+            <button onclick="generateMathProblem('one')">One Digit</button>
+            <button onclick="generateMathProblem('two')">Two Digits</button>
+        </div>
+        
         <p id="math-problem"></p>
-        <input type="text" id="answer-box" placeholder="Enter your answer here" disabled>
-        <button onclick="checkAnswer()" disabled id="submit-button">Submit</button>
-        <p id="result"></p>
-    </div>
-    <script src="scripts.js"></script>
-</body>
-</html>
+        <input type="text" id="answer-box" placeholder="Enter your a
