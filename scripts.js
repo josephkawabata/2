@@ -1,10 +1,16 @@
 let correctAnswer;
 let operation;
+let digitCount;
 
-function generateMathProblem(op) {
+function selectOperation(op) {
     operation = op;
-    const num1 = Math.floor(Math.random() * 10);
-    const num2 = Math.floor(Math.random() * 10);
+    document.getElementById('digit-choice').style.display = 'block';
+}
+
+function generateMathProblem(digits) {
+    digitCount = digits;
+    const num1 = generateNumber(digitCount);
+    const num2 = generateNumber(digitCount);
     const mathProblemElement = document.getElementById('math-problem');
     const answerBox = document.getElementById('answer-box');
     const resultElement = document.getElementById('result');
@@ -25,6 +31,14 @@ function generateMathProblem(op) {
     }
 }
 
+function generateNumber(digits) {
+    if (digits === 'one') {
+        return Math.floor(Math.random() * 10);
+    } else if (digits === 'two') {
+        return Math.floor(Math.random() * 90) + 10; // Two-digit number between 10 and 99
+    }
+}
+
 function checkAnswer() {
     const answerBox = document.getElementById('answer-box');
     const userAnswer = parseInt(answerBox.value);
@@ -32,10 +46,10 @@ function checkAnswer() {
     const submitButton = document.getElementById('submit-button');
     
     if (userAnswer === correctAnswer) {
-        resultElement.textContent = 'Correct! Do another problem if you want to.';
+        resultElement.textContent = 'Correct!';
         resultElement.style.color = 'green';
     } else {
-        resultElement.textContent = `NO it's ${correctAnswer}!!! You must do another problem.`;
+        resultElement.textContent = `Incorrect. The correct answer was ${correctAnswer}.`;
         resultElement.style.color = 'red';
     }
     
