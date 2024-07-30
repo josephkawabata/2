@@ -119,8 +119,7 @@ function showDigitChoice() {
 
 function generateAnotherOne() {
     if (operation === 'algebra') {
-        const algebraType = document.getElementById('math-problem').textContent.split(' ')[1];
-        generateAlgebraProblem(algebraType);
+        generateAlgebraProblem(operation); // Use the operation variable to pass the current algebra type
     } else {
         generateMathProblem(currentDigits);
     }
