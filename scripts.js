@@ -66,6 +66,7 @@ function generateAlgebraProblem(type) {
     submitButton.disabled = false;
     
     document.getElementById('algebra-text').style.display = 'block';
+    document.getElementById('algebra-choice').style.display = 'none'; // Hide algebra choices
 
     if (type === 'addition') {
         correctAnswer = a + b;
