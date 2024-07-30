@@ -25,3 +25,5 @@ function checkAnswer() {
         resultElement.style.color = 'red';
     }
 }
+
+
