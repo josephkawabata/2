@@ -3,6 +3,7 @@ let operation;
 
 function selectOperation(op) {
     operation = op;
+    document.getElementById('problem-type-choice').style.display = 'none';
     document.getElementById('choose-digits-button').style.display = 'block';
     generateMathProblem('one'); // Default to one-digit problem
 }
