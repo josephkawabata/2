@@ -35,6 +35,7 @@ function generateMathProblem(digits) {
     // Show the digit choice button after generating the default problem
     document.getElementById('digit-choice').style.display = 'none';
     document.getElementById('choose-digits-button').style.display = 'block';
+    document.getElementById('new-problem-button').style.display = 'none';
 }
 
 function generateNumber(digits) {
@@ -64,8 +65,8 @@ function checkAnswer() {
     answerBox.disabled = true;
     document.getElementById('submit-button').disabled = true;
     
-    // Delay resetting the form to allow the user to see the result
-    setTimeout(resetSelection, 3000); // 3-second delay
+    // Show the new problem button to allow the user to reset the form
+    document.getElementById('new-problem-button').style.display = 'block';
 }
 
 function showDigitChoice() {
@@ -76,6 +77,7 @@ function resetSelection() {
     document.getElementById('problem-type-choice').style.display = 'block';
     document.getElementById('digit-choice').style.display = 'none';
     document.getElementById('choose-digits-button').style.display = 'none';
+    document.getElementById('new-problem-button').style.display = 'none';
     document.getElementById('math-problem').textContent = '';
     document.getElementById('result').textContent = '';
     document.getElementById('answer-box').disabled = true;
