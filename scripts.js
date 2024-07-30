@@ -72,6 +72,10 @@ function generateAlgebraProblem(type) {
     document.getElementById('algebra-text').style.display = 'block';
     document.getElementById('algebra-choice').style.display = 'none'; // Hide algebra choices
 
+    if (!type || type === 'addition/subtraction') {
+        type = Math.random() < 0.5 ? 'addition' : 'subtraction';
+    }
+
     if (type === 'addition') {
         correctAnswer = a + b;
         mathProblemElement.textContent = `${a} + ${b} = x`;
