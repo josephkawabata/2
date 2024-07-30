@@ -5,6 +5,10 @@ let digitCount;
 function selectOperation(op) {
     operation = op;
     document.getElementById('digit-choice').style.display = 'block';
+    document.getElementById('math-problem').textContent = '';
+    document.getElementById('result').textContent = '';
+    document.getElementById('answer-box').disabled = true;
+    document.getElementById('submit-button').disabled = true;
 }
 
 function generateMathProblem(digits) {
@@ -53,7 +57,7 @@ function checkAnswer() {
         resultElement.style.color = 'red';
     }
     
-    // Disable input and submit button after checking the answer
-    answerBox.disabled = true;
-    submitButton.disabled = true;
+    // Enable the problem type selection again after checking the answer
+    document.getElementById('problem-type-choice').style.display = 'block';
+    document.getElementById('digit-choice').style.display = 'none';
 }
