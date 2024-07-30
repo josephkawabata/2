@@ -49,7 +49,6 @@ p {
 
 #algebra-choice {
     position: absolute;
-    left: 20px; /* Position the algebra buttons farther to the left */
-    top: 50%;
-    transform: translateY(-50%);
+    top: 10px;
+    left: 10px; /* Position the algebra buttons in the top-left section */
 }
