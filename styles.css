@@ -13,6 +13,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    text-align: center; /* Center the text */
 }
 
 #answer-box {
@@ -48,7 +49,7 @@ p {
 }
 
 #algebra-choice {
-    position: absolute;
-    top: 10px;
-    left: 10px; /* Position the algebra buttons in the top-left section */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
