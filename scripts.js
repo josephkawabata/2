@@ -4,8 +4,12 @@ let operation;
 function selectOperation(op) {
     operation = op;
     document.getElementById('problem-type-choice').style.display = 'none';
-    document.getElementById('choose-digits-button').style.display = 'block';
-    generateMathProblem('one'); // Default to one-digit problem
+    if (operation === 'algebra') {
+        generateAlgebraProblem();
+    } else {
+        document.getElementById('choose-digits-button').style.display = 'block';
+        generateMathProblem('one'); // Default to one-digit problem
+    }
 }
 
 function generateMathProblem(digits) {
@@ -35,6 +39,30 @@ function generateMathProblem(digits) {
     // Show the digit choice button after generating the default problem
     document.getElementById('digit-choice').style.display = 'none';
     document.getElementById('choose-digits-button').style.display = 'block';
+    document.getElementById('new-problem-button').style.display = 'none';
+}
+
+function generateAlgebraProblem() {
+    let a = Math.floor(Math.random() * 10);
+    let b = Math.floor(Math.random() * 10);
+    correctAnswer = a + b;
+    
+    const mathProblemElement = document.getElementById('math-problem');
+    const answerBox = document.getElementById('answer-box');
+    const resultElement = document.getElementById('result');
+    const submitButton = document.getElementById('submit-button');
+    
+    // Clear previous problem and result
+    answerBox.value = '';
+    resultElement.textContent = '';
+    answerBox.disabled = false;
+    submitButton.disabled = false;
+    
+    mathProblemElement.textContent = `${a} + ${b} = x`;
+    
+    // Hide the digit choice button for algebra problems
+    document.getElementById('digit-choice').style.display = 'none';
+    document.getElementById('choose-digits-button').style.display = 'none';
     document.getElementById('new-problem-button').style.display = 'none';
 }
 
