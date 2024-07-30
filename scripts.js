@@ -9,7 +9,7 @@ function generateMathProblem() {
     const num2 = Math.floor(Math.random() * 10);
     correctAnswer = num1 + num2;
     const mathProblemElement = document.getElementById('math-problem');
-    mathProblemElement.textContent = `What is ${num1} + ${num2}?`;
+    mathProblemElement.textContent = `${num1} + ${num2} = ?`;
 }
 
 function checkAnswer() {
