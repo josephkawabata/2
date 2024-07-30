@@ -30,6 +30,8 @@ function generateMathProblem(digits) {
     // Clear previous problem and result
     answerBox.value = '';
     resultElement.textContent = '';
+    answerBox.style.display = 'block';
+    submitButton.style.display = 'block';
     answerBox.disabled = false;
     submitButton.disabled = false;
 
@@ -62,6 +64,8 @@ function generateAlgebraProblem(type) {
     // Clear previous problem and result
     answerBox.value = '';
     resultElement.textContent = '';
+    answerBox.style.display = 'block';
+    submitButton.style.display = 'block';
     answerBox.disabled = false;
     submitButton.disabled = false;
     
@@ -140,6 +144,8 @@ function resetSelection() {
     document.getElementById('algebra-text').style.display = 'none';
     document.getElementById('math-problem').textContent = '';
     document.getElementById('result').textContent = '';
+    document.getElementById('answer-box').style.display = 'none';
+    document.getElementById('submit-button').style.display = 'none';
     document.getElementById('answer-box').disabled = true;
     document.getElementById('submit-button').disabled = true;
 }
