@@ -16,17 +16,17 @@ body {
 }
 
 #answer-box {
-    padding: 20px;
-    font-size: 32px;
+    padding: 10px;
+    font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 button {
-    margin-top: 20px;
-    padding: 20px 40px;
-    font-size: 32px;
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
     border: none;
     border-radius: 4px;
     background-color: #007BFF;
