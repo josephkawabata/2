@@ -22,11 +22,13 @@
             <button onclick="generateMathProblem('three')">Three Digits</button>
         </div>
         
-        <div id="algebra-choice" style="display: none; flex-direction: column; align-items: flex-start;">
-            <p>Choose an algebra problem type:</p>
-            <button onclick="generateAlgebraProblem('addition')">Algebra Involving Addition</button>
-            <button onclick="generateAlgebraProblem('subtraction')">Algebra Involving Subtraction</button>
-            <button onclick="generateAlgebraProblem('multiplication')">Algebra Involving Multiplication</button>
+        <div id="algebra-choice" style="display: none;">
+            <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                <p>Choose an algebra problem type:</p>
+                <button onclick="generateAlgebraProblem('addition')">Algebra Involving Addition</button>
+                <button onclick="generateAlgebraProblem('subtraction')">Algebra Involving Subtraction</button>
+                <button onclick="generateAlgebraProblem('multiplication')">Algebra Involving Multiplication</button>
+            </div>
         </div>
 
         <p id="algebra-text" style="display: none;">Solve for x:</p>
