@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>math practice</title>
+    <title>Simple Webpage</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
+        <p>Choose a problem type:</p>
+        <button onclick="generateMathProblem('addition')">Addition</button>
+        <button onclick="generateMathProblem('subtraction')">Subtraction</button>
         <p id="math-problem"></p>
-        <input type="text" id="answer-box" placeholder="Enter answer please :D">
+        <input type="text" id="answer-box" placeholder="Enter your answer here">
         <button onclick="checkAnswer()">Submit</button>
         <p id="result"></p>
     </div>
