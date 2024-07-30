@@ -1,15 +1,19 @@
-document.addEventListener('DOMContentLoaded', function() {
-    generateMathProblem();
-});
-
 let correctAnswer;
+let operation;
 
-function generateMathProblem() {
+function generateMathProblem(op) {
+    operation = op;
     const num1 = Math.floor(Math.random() * 10);
     const num2 = Math.floor(Math.random() * 10);
-    correctAnswer = num1 + num2;
     const mathProblemElement = document.getElementById('math-problem');
-    mathProblemElement.textContent = `${num1} + ${num2} = ?`;
+    
+    if (operation === 'addition') {
+        correctAnswer = num1 + num2;
+        mathProblemElement.textContent = `${num1} + ${num2} = ?`;
+    } else if (operation === 'subtraction') {
+        correctAnswer = num1 - num2;
+        mathProblemElement.textContent = `${num1} - ${num2} = ?`;
+    }
 }
 
 function checkAnswer() {
