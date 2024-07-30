@@ -32,10 +32,10 @@ function checkAnswer() {
     const submitButton = document.getElementById('submit-button');
     
     if (userAnswer === correctAnswer) {
-        resultElement.textContent = 'Correct!';
+        resultElement.textContent = 'Correct! Do another problem if you want to.';
         resultElement.style.color = 'green';
     } else {
-        resultElement.textContent = `Incorrect. The correct answer was ${correctAnswer}.`;
+        resultElement.textContent = `NO it's ${correctAnswer}!!! You must do another problem.`;
         resultElement.style.color = 'red';
     }
     
