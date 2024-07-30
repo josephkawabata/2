@@ -1,12 +1,11 @@
 body {
-body {
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .container {
@@ -14,7 +13,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    text-align: center; /* Center the text */
+    text-align: center;
 }
 
 #answer-box {
