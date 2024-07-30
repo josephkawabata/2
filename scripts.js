@@ -51,7 +51,6 @@ function checkAnswer() {
     const answerBox = document.getElementById('answer-box');
     const userAnswer = parseInt(answerBox.value);
     const resultElement = document.getElementById('result');
-    const submitButton = document.getElementById('submit-button');
     
     if (userAnswer === correctAnswer) {
         resultElement.textContent = 'Correct!';
@@ -61,8 +60,12 @@ function checkAnswer() {
         resultElement.style.color = 'red';
     }
     
-    // Enable the problem type selection again after checking the answer
-    resetSelection();
+    // Disable the input and submit button to prevent further input
+    answerBox.disabled = true;
+    document.getElementById('submit-button').disabled = true;
+    
+    // Delay resetting the form to allow the user to see the result
+    setTimeout(resetSelection, 3000); // 3-second delay
 }
 
 function showDigitChoice() {
