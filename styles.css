@@ -1,45 +1,59 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
+let correctAnswer;
+let operation;
+let digitCount;
+
+function selectOperation(op) {
+    operation = op;
+    document.getElementById('digit-choice').style.display = 'block';
 }
 
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+function generateMathProblem(digits) {
+    digitCount = digits;
+    const num1 = generateNumber(digitCount);
+    const num2 = generateNumber(digitCount);
+    const mathProblemElement = document.getElementById('math-problem');
+    const answerBox = document.getElementById('answer-box');
+    const resultElement = document.getElementById('result');
+    const submitButton = document.getElementById('submit-button');
+    
+    // Clear previous problem and result
+    answerBox.value = '';
+    resultElement.textContent = '';
+    answerBox.disabled = false;
+    submitButton.disabled = false;
+
+    if (operation === 'addition') {
+        correctAnswer = num1 + num2;
+        mathProblemElement.textContent = `${num1} + ${num2} = ?`;
+    } else if (operation === 'subtraction') {
+        correctAnswer = num1 - num2;
+        mathProblemElement.textContent = `${num1} - ${num2} = ?`;
+    }
 }
 
-#answer-box {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-top: 10px;
+function generateNumber(digits) {
+    if (digits === 'one') {
+        return Math.floor(Math.random() * 10);
+    } else if (digits === 'two') {
+        return Math.floor(Math.random() * 90) + 10; // Two-digit number between 10 and 99
+    }
 }
 
-button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007BFF;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-#result {
-    margin-top: 10px;
-    font-size: 18px;
-    color: green;
+function checkAnswer() {
+    const answerBox = document.getElementById('answer-box');
+    const userAnswer = parseInt(answerBox.value);
+    const resultElement = document.getElementById('result');
+    const submitButton = document.getElementById('submit-button');
+    
+    if (userAnswer === correctAnswer) {
+        resultElement.textContent = 'Correct!';
+        resultElement.style.color = 'green';
+    } else {
+        resultElement.textContent = `Incorrect. The correct answer was ${correctAnswer}.`;
+        resultElement.style.color = 'red';
+    }
+    
+    // Disable input and submit button after checking the answer
+    answerBox.disabled = true;
+    submitButton.disabled = true;
 }
