@@ -6,6 +6,7 @@ function selectOperation(op) {
     operation = op;
     document.getElementById('problem-type-choice').style.display = 'none';
     document.getElementById('algebra-text').style.display = 'none';
+    document.getElementById('new-problem-button').style.display = 'block';
     if (operation === 'algebra') {
         generateAlgebraProblem();
     } else {
@@ -42,7 +43,7 @@ function generateMathProblem(digits) {
     // Show the digit choice button after generating the default problem
     document.getElementById('digit-choice').style.display = 'none';
     document.getElementById('choose-digits-button').style.display = 'block';
-    document.getElementById('new-problem-button').style.display = 'none';
+    document.getElementById('new-problem-button').style.display = 'block';
     document.getElementById('another-one-button').style.display = 'none';
 }
 
@@ -68,7 +69,7 @@ function generateAlgebraProblem() {
     // Hide the digit choice button for algebra problems
     document.getElementById('digit-choice').style.display = 'none';
     document.getElementById('choose-digits-button').style.display = 'none';
-    document.getElementById('new-problem-button').style.display = 'none';
+    document.getElementById('new-problem-button').style.display = 'block';
     document.getElementById('another-one-button').style.display = 'none';
 }
 
