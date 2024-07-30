@@ -8,7 +8,7 @@ function selectOperation(op) {
     document.getElementById('algebra-text').style.display = 'none';
     document.getElementById('new-problem-button').style.display = 'block';
     if (operation === 'algebra') {
-        generateAlgebraProblem();
+        document.getElementById('algebra-choice').style.display = 'flex';
     } else {
         document.getElementById('choose-digits-button').style.display = 'block';
         generateMathProblem('one'); // Default to one-digit problem
@@ -47,11 +47,9 @@ function generateMathProblem(digits) {
     document.getElementById('another-one-button').style.display = 'none';
 }
 
-function generateAlgebraProblem() {
+function generateAlgebraProblem(type) {
     let a = Math.floor(Math.random() * 10);
     let b = Math.floor(Math.random() * 10);
-    correctAnswer = a + b;
-    
     const mathProblemElement = document.getElementById('math-problem');
     const answerBox = document.getElementById('answer-box');
     const resultElement = document.getElementById('result');
@@ -64,7 +62,17 @@ function generateAlgebraProblem() {
     submitButton.disabled = false;
     
     document.getElementById('algebra-text').style.display = 'block';
-    mathProblemElement.textContent = `${a} + ${b} = x`;
+
+    if (type === 'addition') {
+        correctAnswer = a + b;
+        mathProblemElement.textContent = `${a} + ${b} = x`;
+    } else if (type === 'subtraction') {
+        correctAnswer = a - b;
+        mathProblemElement.textContent = `${a} - ${b} = x`;
+    } else if (type === 'multiplication') {
+        correctAnswer = a * b;
+        mathProblemElement.textContent = `${a} * ${b} = x`;
+    }
     
     // Hide the digit choice button for algebra problems
     document.getElementById('digit-choice').style.display = 'none';
@@ -111,7 +119,8 @@ function showDigitChoice() {
 
 function generateAnotherOne() {
     if (operation === 'algebra') {
-        generateAlgebraProblem();
+        const algebraType = document.getElementById('math-problem').textContent.split(' ')[1];
+        generateAlgebraProblem(algebraType);
     } else {
         generateMathProblem(currentDigits);
     }
@@ -120,6 +129,7 @@ function generateAnotherOne() {
 function resetSelection() {
     document.getElementById('problem-type-choice').style.display = 'block';
     document.getElementById('digit-choice').style.display = 'none';
+    document.getElementById('algebra-choice').style.display = 'none';
     document.getElementById('choose-digits-button').style.display = 'none';
     document.getElementById('new-problem-button').style.display = 'none';
     document.getElementById('another-one-button').style.display = 'none';
