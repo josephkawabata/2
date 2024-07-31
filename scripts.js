@@ -138,23 +138,32 @@ function generateCombinedAlgebraProblem() {
     let a = Math.floor(Math.random() * 10);
     let b = Math.floor(Math.random() * 10);
     let c = Math.floor(Math.random() * 10);
-    types.forEach((type, index) => {
+    let operationsCount = Math.floor(Math.random() * 2) + 1; // Generate at most 2 operations
+
+    for (let i = 0; i < operationsCount; i++) {
+        let type = types[Math.floor(Math.random() * types.length)];
+
         if (type === 'addition') {
-            problem += `${index > 0 ? ' + ' : ''}${a} + ${b}`;
-            correct = correct === 0 ? a + b : correct + b;
+            problem += `${i > 0 ? ' + ' : ''}${a} + ${b}`;
+            correct = i === 0 ? a + b : correct + b;
         } else if (type === 'subtraction') {
-            problem += `${index > 0 ? ' - ' : ''}${a} - ${b}`;
-            correct = correct === 0 ? a - b : correct - b;
+            problem += `${i > 0 ? ' - ' : ''}${a} - ${b}`;
+            correct = i === 0 ? a - b : correct - b;
         } else if (type === 'multiplication') {
-            problem += `${index > 0 ? ' * ' : ''}${a} * ${b}`;
-            correct = correct === 0 ? a * b : correct * b;
+            problem += `${i > 0 ? ' * ' : ''}${a} * ${b}`;
+            correct = i === 0 ? a * b : correct * b;
         } else if (type === 'division') {
             if (b === 0) b = 1;
-            problem += `${index > 0 ? ' / ' : ''}<div class="fraction"><span>${a}</span><span class="denominator">${b}</span></div>`;
-            correct = correct === 0 ? a / b : correct / b;
+            problem += `${i > 0 ? ' / ' : ''}<div class="fraction"><span>${a}</span><span class="denominator">${b}</span></div>`;
+            correct = i === 0 ? a / b : correct / b;
         }
-        a = c; // Use c for next operation if more than one type is selected
-    });
+
+        if (i < operationsCount - 1) {
+            a = c; // Use c for next operation if more than one type is selected
+            b = Math.floor(Math.random() * 10);
+            c = Math.floor(Math.random() * 10);
+        }
+    }
     
     const mathProblemElement = document.getElementById('math-problem');
     mathProblemElement.innerHTML = `${problem} = x`;
@@ -244,6 +253,11 @@ function resetSelection() {
     document.getElementById('submit-button').style.display = 'none';
     document.getElementById('answer-box').disabled = true;
     document.getElementById('submit-button').disabled = true;
+    correctAnswer = null;
+    operation = null;
+    currentDigits = 'one'; // Reset to default
+    algebraAttributes = []; // Reset algebra attributes
+    arithmeticType = null;
 }
 
 function navigateButtons(event) {
