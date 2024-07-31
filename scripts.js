@@ -141,17 +141,17 @@ function generateCombinedAlgebraProblem() {
     types.forEach((type, index) => {
         if (type === 'addition') {
             problem += `${index > 0 ? ' + ' : ''}${a} + ${b}`;
-            correct += a + b;
+            correct = correct === 0 ? a + b : correct + b;
         } else if (type === 'subtraction') {
             problem += `${index > 0 ? ' - ' : ''}${a} - ${b}`;
-            correct += a - b;
+            correct = correct === 0 ? a - b : correct - b;
         } else if (type === 'multiplication') {
             problem += `${index > 0 ? ' * ' : ''}${a} * ${b}`;
-            correct += a * b;
+            correct = correct === 0 ? a * b : correct * b;
         } else if (type === 'division') {
             if (b === 0) b = 1;
             problem += `${index > 0 ? ' / ' : ''}<div class="fraction"><span>${a}</span><span class="denominator">${b}</span></div>`;
-            correct += a / b;
+            correct = correct === 0 ? a / b : correct / b;
         }
         a = c; // Use c for next operation if more than one type is selected
     });
@@ -221,8 +221,10 @@ function showDigitChoice() {
 
 function generateAnotherOne() {
     if (operation === 'algebra') {
+        document.getElementById('result').textContent = ''; // Clear the result text
         generateCombinedAlgebraProblem(); // Generate a combined algebra problem
     } else if (operation === 'arithmetic') {
+        document.getElementById('result').textContent = ''; // Clear the result text
         generateMathProblem(currentDigits); // Use the stored arithmetic type to generate a new problem
     }
 }
