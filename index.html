@@ -16,8 +16,8 @@
         
         <div id="arithmetic-choice" style="display: none;">
             <p>Choose arithmetic problem type:</p>
-            <button onclick="generateMathProblem('addition')">Addition</button>
-            <button onclick="generateMathProblem('subtraction')">Subtraction</button>
+            <button onclick="chooseArithmeticType('addition')">Addition</button>
+            <button onclick="chooseArithmeticType('subtraction')">Subtraction</button>
         </div>
 
         <div id="digit-choice" style="display: none;">
@@ -35,7 +35,7 @@
 
         <p id="algebra-text" style="display: none;">Solve for x:</p>
         <p id="math-problem"></p>
-        <input type="text" id="answer-box" placeholder="Enter your answer here" style="display: none;">
+        <input type="text" id="answer-box" placeholder="Enter your answer here" style="display: none;" onkeydown="if(event.key === 'Enter') checkAnswer();">
         <button onclick="checkAnswer()" id="submit-button" style="display: none;">Submit</button>
         <p id="result"></p>
         
