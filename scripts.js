@@ -141,17 +141,17 @@ function generateCombinedAlgebraProblem() {
     types.forEach((type, index) => {
         if (type === 'addition') {
             problem += `${index > 0 ? ' + ' : ''}${a} + ${b}`;
-            correct += a + b;
+            correct = index === 0 ? a + b : correct + b;
         } else if (type === 'subtraction') {
             problem += `${index > 0 ? ' - ' : ''}${a} - ${b}`;
-            correct += a - b;
+            correct = index === 0 ? a - b : correct - b;
         } else if (type === 'multiplication') {
             problem += `${index > 0 ? ' * ' : ''}${a} * ${b}`;
-            correct += a * b;
+            correct = index === 0 ? a * b : correct * b;
         } else if (type === 'division') {
             if (b === 0) b = 1;
             problem += `${index > 0 ? ' / ' : ''}<div class="fraction"><span>${a}</span><span class="denominator">${b}</span></div>`;
-            correct += a / b;
+            correct = index === 0 ? a / b : correct / b;
         }
         a = Math.floor(Math.random() * 10);
         b = Math.floor(Math.random() * 10);
@@ -223,9 +223,17 @@ function showDigitChoice() {
 function generateAnotherOne() {
     if (operation === 'algebra') {
         document.getElementById('result').textContent = ''; // Clear the result text
+        document.getElementById('answer-box').value = ''; // Clear the input box
+        document.getElementById('answer-box').disabled = false;
+        document.getElementById('submit-button').disabled = false;
+        document.getElementById('answer-box').focus(); // Automatically focus on the input box
         generateCombinedAlgebraProblem(); // Generate a combined algebra problem
     } else if (operation === 'arithmetic') {
         document.getElementById('result').textContent = ''; // Clear the result text
+        document.getElementById('answer-box').value = ''; // Clear the input box
+        document.getElementById('answer-box').disabled = false;
+        document.getElementById('submit-button').disabled = false;
+        document.getElementById('answer-box').focus(); // Automatically focus on the input box
         generateMathProblem(currentDigits); // Use the stored arithmetic type to generate a new problem
     }
 }
