@@ -98,8 +98,7 @@ function generateAlgebraProblem(type) {
         correctAnswer = a * b;
         mathProblemElement.textContent = `${a} * ${b} = x`;
     } else if (type === 'division') {
-        // Ensure b is not zero and the division results in a whole number
-        if (b === 0) b = 1;
+        if (b === 0) b = 1; // Ensure b is not zero
         correctAnswer = a / b;
         mathProblemElement.innerHTML = `<div class="fraction"><span>${a}</span><span class="denominator">${b}</span></div> = x`;
     }
@@ -134,32 +133,30 @@ function generateCombinedAlgebraProblem() {
     });
     
     let problem = '';
-    let correct = 0;
     let a = Math.floor(Math.random() * 10);
     let b = Math.floor(Math.random() * 10);
 
     types.forEach((type, index) => {
         if (type === 'addition') {
             problem += `${index > 0 ? ' + ' : ''}${a} + ${b}`;
-            correct = index === 0 ? a + b : correct + b;
+            a += b;
         } else if (type === 'subtraction') {
             problem += `${index > 0 ? ' - ' : ''}${a} - ${b}`;
-            correct = index === 0 ? a - b : correct - b;
+            a -= b;
         } else if (type === 'multiplication') {
             problem += `${index > 0 ? ' * ' : ''}${a} * ${b}`;
-            correct = index === 0 ? a * b : correct * b;
+            a *= b;
         } else if (type === 'division') {
             if (b === 0) b = 1;
             problem += `${index > 0 ? ' / ' : ''}<div class="fraction"><span>${a}</span><span class="denominator">${b}</span></div>`;
-            correct = index === 0 ? a / b : correct / b;
+            a /= b;
         }
-        a = Math.floor(Math.random() * 10);
         b = Math.floor(Math.random() * 10);
     });
     
     const mathProblemElement = document.getElementById('math-problem');
     mathProblemElement.innerHTML = `${problem} = x`;
-    correctAnswer = eval(problem.replace(/x/g, correct));
+    correctAnswer = a;
     
     // Display the answer input box and submit button
     const answerBox = document.getElementById('answer-box');
@@ -187,7 +184,7 @@ function checkAnswer() {
     const userAnswer = parseFraction(answerBox.value.trim());
     const resultElement = document.getElementById('result');
     
-    if (userAnswer === correctAnswer) {
+    if (userAnswer === correctAnswer || Math.abs(userAnswer - correctAnswer) < 0.0001) {
         resultElement.textContent = 'Correct!';
         resultElement.style.color = 'green';
     } else {
