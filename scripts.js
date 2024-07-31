@@ -84,6 +84,8 @@ function generateAlgebraProblem(type) {
 
     if (!type || type === 'addition/subtraction') {
         type = Math.random() < 0.5 ? 'addition' : 'subtraction';
+    } else if (type === 'multiplication/division') {
+        type = Math.random() < 0.5 ? 'multiplication' : 'division';
     }
 
     if (type === 'addition') {
@@ -95,6 +97,11 @@ function generateAlgebraProblem(type) {
     } else if (type === 'multiplication') {
         correctAnswer = a * b;
         mathProblemElement.textContent = `${a} * ${b} = x`;
+    } else if (type === 'division') {
+        // Ensure a is divisible by b and no division by zero
+        if (b === 0) b = 1;
+        correctAnswer = a / b;
+        mathProblemElement.textContent = `${a} / ${b} = x`;
     }
     
     // Hide the increase/decrease digits button for algebra problems
