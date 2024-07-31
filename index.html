@@ -40,9 +40,9 @@
         <button onclick="checkAnswer()" id="submit-button" style="display: none;">Submit</button>
         <p id="result"></p>
         
-        <button id="another-one-button" style="display: none;" onclick="generateAnotherOne()">Another One!</button>
-        <button id="choose-digits-button" style="display: none;" onclick="showDigitChoice()">Increase/Decrease Digits</button>
-        <button id="new-problem-button" style="display: none;" onclick="resetSelection()">Back Home</button>
+        <button id="another-one-button" style="display: none;" onclick="generateAnotherOne()" onkeydown="navigateButtons(event)">Another One!</button>
+        <button id="choose-digits-button" style="display: none;" onclick="showDigitChoice()" onkeydown="navigateButtons(event)">Increase/Decrease Digits</button>
+        <button id="new-problem-button" style="display: none;" onclick="resetSelection()" onkeydown="navigateButtons(event)">Back Home</button>
     </div>
     <script src="scripts.js"></script>
 </body>
