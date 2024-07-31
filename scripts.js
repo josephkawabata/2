@@ -56,6 +56,9 @@ function generateMathProblem(digits) {
     document.getElementById('choose-digits-button').style.display = 'block';
     document.getElementById('new-problem-button').style.display = 'block';
     document.getElementById('another-one-button').style.display = 'none';
+    
+    // Hide the digit choice buttons and header
+    document.getElementById('digit-choice').style.display = 'none';
 }
 
 function generateAlgebraProblem(type) {
@@ -134,6 +137,7 @@ function checkAnswer() {
 
 function showDigitChoice() {
     document.getElementById('digit-choice').style.display = 'block';
+    document.getElementById('digit-choice-header').style.display = 'block';
 }
 
 function generateAnotherOne() {
