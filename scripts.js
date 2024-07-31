@@ -1,6 +1,6 @@
 let correctAnswer;
 let operation;
-let currentDigits;
+let currentDigits = 'one'; // Default to one digit
 let algebraType; // Store the current algebra type
 let arithmeticType; // Store the current arithmetic type
 
@@ -18,10 +18,16 @@ function selectOperation(op) {
     }
 }
 
-function generateMathProblem(type) {
-    arithmeticType = type; // Set the current arithmetic type
-    let num1 = generateNumber(currentDigits);
-    let num2 = generateNumber(currentDigits);
+function chooseArithmeticType(type) {
+    arithmeticType = type;
+    document.getElementById('arithmetic-choice').style.display = 'none';
+    generateMathProblem(currentDigits);
+}
+
+function generateMathProblem(digits) {
+    currentDigits = digits;
+    let num1 = generateNumber(digits);
+    let num2 = generateNumber(digits);
     const mathProblemElement = document.getElementById('math-problem');
     const answerBox = document.getElementById('answer-box');
     const resultElement = document.getElementById('result');
@@ -35,19 +41,18 @@ function generateMathProblem(type) {
     answerBox.disabled = false;
     submitButton.disabled = false;
 
-    if (type === 'addition') {
+    if (arithmeticType === 'addition') {
         correctAnswer = num1 + num2;
         mathProblemElement.textContent = `${num1} + ${num2} = ?`;
-    } else if (type === 'subtraction') {
+    } else if (arithmeticType === 'subtraction') {
         // Ensure num1 is greater than num2 for positive result
         if (num1 < num2) [num1, num2] = [num2, num1];
         correctAnswer = num1 - num2;
         mathProblemElement.textContent = `${num1} - ${num2} = ?`;
     }
 
-    // Hide the digit choice button for arithmetic problems
-    document.getElementById('digit-choice').style.display = 'none';
-    document.getElementById('choose-digits-button').style.display = 'block';
+    // Show the digit choice button for arithmetic problems
+    document.getElementById('digit-choice').style.display = 'block';
     document.getElementById('new-problem-button').style.display = 'block';
     document.getElementById('another-one-button').style.display = 'none';
 }
@@ -134,7 +139,7 @@ function generateAnotherOne() {
     if (operation === 'algebra') {
         generateAlgebraProblem(algebraType); // Use the stored algebra type to generate a new problem
     } else if (operation === 'arithmetic') {
-        generateMathProblem(arithmeticType); // Use the stored arithmetic type to generate a new problem
+        generateMathProblem(currentDigits); // Use the stored arithmetic type to generate a new problem
     }
 }
 
