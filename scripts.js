@@ -11,6 +11,13 @@ function handleEnterForSubmit(event) {
     }
 }
 
+// Function to handle Enter key for Another One button
+function handleEnterForAnotherOne(event) {
+    if (event.key === 'Enter') {
+        generateAnotherOne();
+    }
+}
+
 // Ensure the event listener for Enter key is always set to trigger the Submit button
 document.addEventListener('keydown', handleEnterForSubmit);
 
@@ -141,33 +148,44 @@ function generateCombinedAlgebraProblem() {
             types.push(Math.random() < 0.5 ? 'multiplication' : 'division');
         }
     });
-    
-    let problem = '';
-    let a = Math.floor(Math.random() * 10);
-    let b = Math.floor(Math.random() * 10);
 
-    types.forEach((type, index) => {
-        if (type === 'addition') {
-            problem += `${index > 0 ? ' + ' : ''}${a} + ${b}`;
-            a += b;
-        } else if (type === 'subtraction') {
-            problem += `${index > 0 ? ' - ' : ''}${a} - ${b}`;
-            a -= b;
-        } else if (type === 'multiplication') {
-            problem += `${index > 0 ? ' * ' : ''}${a} * ${b}`;
-            a *= b;
-        } else if (type === 'division') {
-            if (b === 0) b = 1;
-            problem += `${index > 0 ? ' / ' : ''}<div class="fraction"><span>${a}</span><span class="denominator">${b}</span></div>`;
-            a /= b;
+    let problem = '';
+    let numbers = [];
+    let result = 0;
+    for (let i = 0; i <= types.length; i++) {
+        numbers.push(Math.floor(Math.random() * 10));
+    }
+
+    numbers.forEach((num, index) => {
+        if (index < types.length) {
+            const type = types[index];
+            if (type === 'addition') {
+                problem += `${num} + `;
+                result += num;
+            } else if (type === 'subtraction') {
+                problem += `${num} - `;
+                result -= num;
+            } else if (type === 'multiplication') {
+                problem += `${num} * `;
+                result *= num;
+            } else if (type === 'division') {
+                if (num === 0) num = 1; // Ensure num is not zero
+                problem += `<div class="fraction"><span>${numbers[index]}</span><span class="denominator">${num}</span></div> / `;
+                result /= num;
+            }
+        } else {
+            problem += `${num}`;
+            if (types[types.length - 1] === 'addition') result += num;
+            else if (types[types.length - 1] === 'subtraction') result -= num;
+            else if (types[types.length - 1] === 'multiplication') result *= num;
+            else if (types[types.length - 1] === 'division') result /= num;
         }
-        b = Math.floor(Math.random() * 10);
     });
-    
+
     const mathProblemElement = document.getElementById('math-problem');
     mathProblemElement.innerHTML = `${problem} = x`;
-    correctAnswer = a;
-    
+    correctAnswer = result;
+
     // Display the answer input box and submit button
     const answerBox = document.getElementById('answer-box');
     const submitButton = document.getElementById('submit-button');
