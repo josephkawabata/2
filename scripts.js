@@ -4,6 +4,20 @@ let currentDigits = 'one'; // Default to one digit
 let algebraAttributes = []; // Store the selected algebra attributes
 let arithmeticType; // Store the current arithmetic type
 
+// Function to handle Enter key for Submit button
+function handleEnterForSubmit(event) {
+    if (event.key === 'Enter') {
+        checkAnswer();
+    }
+}
+
+// Function to handle Enter key for Another One button
+function handleEnterForAnotherOne(event) {
+    if (event.key === 'Enter') {
+        document.getElementById('another-one-button').click();
+    }
+}
+
 function selectOperation(op) {
     operation = op;
     document.getElementById('problem-type-choice').style.display = 'none';
@@ -59,6 +73,10 @@ function generateMathProblem(digits) {
     
     // Hide the digit choice buttons and header
     document.getElementById('digit-choice').style.display = 'none';
+
+    // Add event listener for Enter key to trigger the Submit button
+    document.addEventListener('keydown', handleEnterForSubmit);
+    document.removeEventListener('keydown', handleEnterForAnotherOne);
 }
 
 function generateAlgebraProblem(type) {
@@ -107,6 +125,10 @@ function generateAlgebraProblem(type) {
     document.getElementById('choose-digits-button').style.display = 'none';
     document.getElementById('new-problem-button').style.display = 'block';
     document.getElementById('another-one-button').style.display = 'none';
+
+    // Add event listener for Enter key to trigger the Submit button
+    document.addEventListener('keydown', handleEnterForSubmit);
+    document.removeEventListener('keydown', handleEnterForAnotherOne);
 }
 
 function beginAlgebraProblems() {
@@ -167,6 +189,10 @@ function generateCombinedAlgebraProblem() {
     submitButton.disabled = false;
     answerBox.value = ''; // Clear the input box
     answerBox.focus();
+
+    // Add event listener for Enter key to trigger the Submit button
+    document.addEventListener('keydown', handleEnterForSubmit);
+    document.removeEventListener('keydown', handleEnterForAnotherOne);
 }
 
 function generateNumber(digits) {
@@ -202,6 +228,10 @@ function checkAnswer() {
     if (operation === 'arithmetic') {
         document.getElementById('choose-digits-button').style.display = 'block';
     }
+
+    // Add event listener for Enter key to trigger the Another One button
+    document.addEventListener('keydown', handleEnterForAnotherOne);
+    document.removeEventListener('keydown', handleEnterForSubmit);
 }
 
 function parseFraction(fraction) {
@@ -234,14 +264,10 @@ function generateAnotherOne() {
         generateMathProblem(currentDigits); // Use the stored arithmetic type to generate a new problem
     }
 
-    // Add event listener for Enter key to click the Another One! button
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter' && document.getElementById('another-one-button').style.display === 'block') {
-            document.getElementById('another-one-button').click();
-        }
-    });
+    // Add event listener for Enter key to trigger the Submit button
+    document.addEventListener('keydown', handleEnterForSubmit);
+    document.removeEventListener('keydown', handleEnterForAnotherOne);
 }
-
 
 function resetSelection() {
     location.reload(); // Reload the page to reset everything
