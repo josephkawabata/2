@@ -167,6 +167,7 @@ function generateCombinedAlgebraProblem() {
     submitButton.style.display = 'block';
     answerBox.disabled = false;
     submitButton.disabled = false;
+    answerBox.value = ''; // Clear the input box
     answerBox.focus();
 }
 
@@ -200,7 +201,9 @@ function checkAnswer() {
     // Show the new problem and another one button to allow the user to reset the form
     document.getElementById('new-problem-button').style.display = 'block';
     document.getElementById('another-one-button').style.display = 'block';
-    document.getElementById('choose-digits-button').style.display = 'block';
+    if (operation === 'arithmetic') {
+        document.getElementById('choose-digits-button').style.display = 'block';
+    }
 }
 
 function parseFraction(fraction) {
