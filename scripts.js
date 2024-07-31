@@ -239,25 +239,7 @@ function generateAnotherOne() {
 }
 
 function resetSelection() {
-    document.getElementById('problem-type-choice').style.display = 'block';
-    document.getElementById('digit-choice').style.display = 'none';
-    document.getElementById('arithmetic-choice').style.display = 'none';
-    document.getElementById('algebra-choice').style.display = 'none';
-    document.getElementById('choose-digits-button').style.display = 'none';
-    document.getElementById('new-problem-button').style.display = 'none';
-    document.getElementById('another-one-button').style.display = 'none';
-    document.getElementById('algebra-text').style.display = 'none';
-    document.getElementById('math-problem').textContent = '';
-    document.getElementById('result').textContent = '';
-    document.getElementById('answer-box').style.display = 'none';
-    document.getElementById('submit-button').style.display = 'none';
-    document.getElementById('answer-box').disabled = true;
-    document.getElementById('submit-button').disabled = true;
-    correctAnswer = null;
-    operation = null;
-    currentDigits = 'one'; // Reset to default
-    algebraAttributes = []; // Reset algebra attributes
-    arithmeticType = null;
+    location.reload(); // Reload the page to reset everything
 }
 
 function navigateButtons(event) {
