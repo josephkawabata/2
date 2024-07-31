@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     height: 100vh;
     margin: 0;
-    background-color: #000000; /* Black background */
+    background-color: #2E2E2E; /* Dusty chalkboard background */
     color: #ffffff; /* White text */
     display: flex;
     justify-content: center;
