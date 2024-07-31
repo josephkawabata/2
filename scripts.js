@@ -137,37 +137,29 @@ function generateCombinedAlgebraProblem() {
     let correct = 0;
     let a = Math.floor(Math.random() * 10);
     let b = Math.floor(Math.random() * 10);
-    let c = Math.floor(Math.random() * 10);
-    let operationsCount = Math.floor(Math.random() * 2) + 1; // Generate at most 2 operations
 
-    for (let i = 0; i < operationsCount; i++) {
-        let type = types[Math.floor(Math.random() * types.length)];
-
+    types.forEach((type, index) => {
         if (type === 'addition') {
-            problem += `${i > 0 ? ' + ' : ''}${a} + ${b}`;
-            correct = i === 0 ? a + b : correct + b;
+            problem += `${index > 0 ? ' + ' : ''}${a} + ${b}`;
+            correct += a + b;
         } else if (type === 'subtraction') {
-            problem += `${i > 0 ? ' - ' : ''}${a} - ${b}`;
-            correct = i === 0 ? a - b : correct - b;
+            problem += `${index > 0 ? ' - ' : ''}${a} - ${b}`;
+            correct += a - b;
         } else if (type === 'multiplication') {
-            problem += `${i > 0 ? ' * ' : ''}${a} * ${b}`;
-            correct = i === 0 ? a * b : correct * b;
+            problem += `${index > 0 ? ' * ' : ''}${a} * ${b}`;
+            correct += a * b;
         } else if (type === 'division') {
             if (b === 0) b = 1;
-            problem += `${i > 0 ? ' / ' : ''}<div class="fraction"><span>${a}</span><span class="denominator">${b}</span></div>`;
-            correct = i === 0 ? a / b : correct / b;
+            problem += `${index > 0 ? ' / ' : ''}<div class="fraction"><span>${a}</span><span class="denominator">${b}</span></div>`;
+            correct += a / b;
         }
-
-        if (i < operationsCount - 1) {
-            a = c; // Use c for next operation if more than one type is selected
-            b = Math.floor(Math.random() * 10);
-            c = Math.floor(Math.random() * 10);
-        }
-    }
+        a = Math.floor(Math.random() * 10);
+        b = Math.floor(Math.random() * 10);
+    });
     
     const mathProblemElement = document.getElementById('math-problem');
     mathProblemElement.innerHTML = `${problem} = x`;
-    correctAnswer = correct;
+    correctAnswer = eval(problem.replace(/x/g, correct));
     
     // Display the answer input box and submit button
     const answerBox = document.getElementById('answer-box');
