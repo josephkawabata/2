@@ -233,7 +233,15 @@ function generateAnotherOne() {
         document.getElementById('answer-box').focus(); // Automatically focus on the input box
         generateMathProblem(currentDigits); // Use the stored arithmetic type to generate a new problem
     }
+
+    // Add event listener for Enter key to click the Another One! button
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && document.getElementById('another-one-button').style.display === 'block') {
+            document.getElementById('another-one-button').click();
+        }
+    });
 }
+
 
 function resetSelection() {
     location.reload(); // Reload the page to reset everything
