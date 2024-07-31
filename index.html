@@ -28,9 +28,10 @@
         </div>
         
         <div id="algebra-choice" style="display: none;">
-            <p>Choose algebra problem type:</p>
-            <button onclick="generateAlgebraProblem('addition/subtraction')">Algebra Involving Addition/Subtraction</button>
-            <button onclick="generateAlgebraProblem('multiplication/division')">Algebra Involving Multiplication/Division</button>
+            <p>Select attributes:</p>
+            <label><input type="checkbox" id="addition-subtraction" value="addition/subtraction"> Addition/Subtraction</label>
+            <label><input type="checkbox" id="multiplication-division" value="multiplication/division"> Multiplication/Division</label>
+            <button onclick="beginAlgebraProblems()">Begin</button>
         </div>
 
         <p id="algebra-text" style="display: none;">Solve for x:</p>
