@@ -14,7 +14,7 @@ function handleEnterForSubmit(event) {
 // Function to handle Enter key for Another One button
 function handleEnterForAnotherOne(event) {
     if (event.key === 'Enter') {
-        document.getElementById('another-one-button').click();
+        generateAnotherOne();
     }
 }
 
