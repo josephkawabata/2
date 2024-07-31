@@ -98,10 +98,10 @@ function generateAlgebraProblem(type) {
         correctAnswer = a * b;
         mathProblemElement.textContent = `${a} * ${b} = x`;
     } else if (type === 'division') {
-        // Ensure a is divisible by b and no division by zero
+        // Ensure b is not zero and the division results in a whole number
         if (b === 0) b = 1;
         correctAnswer = a / b;
-        mathProblemElement.textContent = `${a} / ${b} = x`;
+        mathProblemElement.innerHTML = `<div class="fraction"><span>${a}</span><span class="denominator">${b}</span></div> = x`;
     }
     
     // Hide the increase/decrease digits button for algebra problems
@@ -122,7 +122,7 @@ function generateNumber(digits) {
 
 function checkAnswer() {
     const answerBox = document.getElementById('answer-box');
-    const userAnswer = parseInt(answerBox.value);
+    const userAnswer = parseFraction(answerBox.value.trim());
     const resultElement = document.getElementById('result');
     
     if (userAnswer === correctAnswer) {
@@ -140,6 +140,14 @@ function checkAnswer() {
     // Show the new problem and another one button to allow the user to reset the form
     document.getElementById('new-problem-button').style.display = 'block';
     document.getElementById('another-one-button').style.display = 'block';
+}
+
+function parseFraction(fraction) {
+    if (fraction.includes('/')) {
+        const [numerator, denominator] = fraction.split('/');
+        return parseFloat(numerator) / parseFloat(denominator);
+    }
+    return parseFloat(fraction);
 }
 
 function showDigitChoice() {
