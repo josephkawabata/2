@@ -264,6 +264,9 @@ function generateAnotherOne() {
         generateMathProblem(currentDigits); // Use the stored arithmetic type to generate a new problem
     }
 
+    // Hide the Another One button
+    document.getElementById('another-one-button').style.display = 'none';
+
     // Add event listener for Enter key to trigger the Submit button
     document.addEventListener('keydown', handleEnterForSubmit);
     document.removeEventListener('keydown', handleEnterForAnotherOne);
