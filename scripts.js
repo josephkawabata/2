@@ -40,6 +40,7 @@ function generateMathProblem(digits) {
     submitButton.style.display = 'block';
     answerBox.disabled = false;
     submitButton.disabled = false;
+    answerBox.focus(); // Automatically focus on the input box
 
     if (arithmeticType === 'addition') {
         correctAnswer = num1 + num2;
@@ -51,8 +52,8 @@ function generateMathProblem(digits) {
         mathProblemElement.textContent = `${num1} - ${num2} = ?`;
     }
 
-    // Show the digit choice button for arithmetic problems
-    document.getElementById('digit-choice').style.display = 'block';
+    // Show the increase/decrease digits button for arithmetic problems
+    document.getElementById('choose-digits-button').style.display = 'block';
     document.getElementById('new-problem-button').style.display = 'block';
     document.getElementById('another-one-button').style.display = 'none';
 }
@@ -73,6 +74,7 @@ function generateAlgebraProblem(type) {
     submitButton.style.display = 'block';
     answerBox.disabled = false;
     submitButton.disabled = false;
+    answerBox.focus(); // Automatically focus on the input box
     
     document.getElementById('algebra-text').style.display = 'block';
     document.getElementById('algebra-choice').style.display = 'none'; // Hide algebra choices
@@ -92,8 +94,7 @@ function generateAlgebraProblem(type) {
         mathProblemElement.textContent = `${a} * ${b} = x`;
     }
     
-    // Hide the digit choice button for algebra problems
-    document.getElementById('digit-choice').style.display = 'none';
+    // Hide the increase/decrease digits button for algebra problems
     document.getElementById('choose-digits-button').style.display = 'none';
     document.getElementById('new-problem-button').style.display = 'block';
     document.getElementById('another-one-button').style.display = 'none';
