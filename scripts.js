@@ -11,13 +11,6 @@ function handleEnterForSubmit(event) {
     }
 }
 
-// Function to handle Enter key for Another One button
-function handleEnterForAnotherOne(event) {
-    if (event.key === 'Enter') {
-        generateAnotherOne();
-    }
-}
-
 // Ensure the event listener for Enter key is always set to trigger the Submit button
 document.addEventListener('keydown', handleEnterForSubmit);
 
@@ -151,34 +144,27 @@ function generateCombinedAlgebraProblem() {
 
     let problem = '';
     let numbers = [];
-    let result = 0;
     for (let i = 0; i <= types.length; i++) {
         numbers.push(Math.floor(Math.random() * 10));
     }
 
-    numbers.forEach((num, index) => {
-        if (index < types.length) {
-            const type = types[index];
-            if (type === 'addition') {
-                problem += `${num} + `;
-                result += num;
-            } else if (type === 'subtraction') {
-                problem += `${num} - `;
-                result -= num;
-            } else if (type === 'multiplication') {
-                problem += `${num} * `;
-                result *= num;
-            } else if (type === 'division') {
-                if (num === 0) num = 1; // Ensure num is not zero
-                problem += `<div class="fraction"><span>${numbers[index]}</span><span class="denominator">${num}</span></div> / `;
-                result /= num;
-            }
-        } else {
-            problem += `${num}`;
-            if (types[types.length - 1] === 'addition') result += num;
-            else if (types[types.length - 1] === 'subtraction') result -= num;
-            else if (types[types.length - 1] === 'multiplication') result *= num;
-            else if (types[types.length - 1] === 'division') result /= num;
+    let result = numbers[0];
+    problem += `${numbers[0]}`;
+
+    types.forEach((type, index) => {
+        if (type === 'addition') {
+            problem += ` + ${numbers[index + 1]}`;
+            result += numbers[index + 1];
+        } else if (type === 'subtraction') {
+            problem += ` - ${numbers[index + 1]}`;
+            result -= numbers[index + 1];
+        } else if (type === 'multiplication') {
+            problem += ` * ${numbers[index + 1]}`;
+            result *= numbers[index + 1];
+        } else if (type === 'division') {
+            if (numbers[index + 1] === 0) numbers[index + 1] = 1; // Ensure num is not zero
+            problem += ` / ${numbers[index + 1]}`;
+            result /= numbers[index + 1];
         }
     });
 
@@ -230,10 +216,6 @@ function checkAnswer() {
     if (operation === 'arithmetic') {
         document.getElementById('choose-digits-button').style.display = 'block';
     }
-
-    // Add event listener for Enter key to trigger the Another One button
-    document.removeEventListener('keydown', handleEnterForSubmit);
-    document.addEventListener('keydown', handleEnterForAnotherOne);
 }
 
 function parseFraction(fraction) {
@@ -268,10 +250,6 @@ function generateAnotherOne() {
 
     // Hide the Another One button
     document.getElementById('another-one-button').style.display = 'none';
-
-    // Add event listener for Enter key to trigger the Submit button
-    document.removeEventListener('keydown', handleEnterForAnotherOne);
-    document.addEventListener('keydown', handleEnterForSubmit);
 }
 
 function resetSelection() {
