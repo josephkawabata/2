@@ -11,12 +11,8 @@ function handleEnterForSubmit(event) {
     }
 }
 
-// Function to handle Enter key for Another One button
-function handleEnterForAnotherOne(event) {
-    if (event.key === 'Enter') {
-        generateAnotherOne();
-    }
-}
+// Ensure the event listener for Enter key is always set to trigger the Submit button
+document.addEventListener('keydown', handleEnterForSubmit);
 
 function selectOperation(op) {
     operation = op;
@@ -73,10 +69,6 @@ function generateMathProblem(digits) {
     
     // Hide the digit choice buttons and header
     document.getElementById('digit-choice').style.display = 'none';
-
-    // Add event listener for Enter key to trigger the Submit button
-    document.addEventListener('keydown', handleEnterForSubmit);
-    document.removeEventListener('keydown', handleEnterForAnotherOne);
 }
 
 function generateAlgebraProblem(type) {
@@ -125,10 +117,6 @@ function generateAlgebraProblem(type) {
     document.getElementById('choose-digits-button').style.display = 'none';
     document.getElementById('new-problem-button').style.display = 'block';
     document.getElementById('another-one-button').style.display = 'none';
-
-    // Add event listener for Enter key to trigger the Submit button
-    document.addEventListener('keydown', handleEnterForSubmit);
-    document.removeEventListener('keydown', handleEnterForAnotherOne);
 }
 
 function beginAlgebraProblems() {
@@ -189,10 +177,6 @@ function generateCombinedAlgebraProblem() {
     submitButton.disabled = false;
     answerBox.value = ''; // Clear the input box
     answerBox.focus();
-
-    // Add event listener for Enter key to trigger the Submit button
-    document.addEventListener('keydown', handleEnterForSubmit);
-    document.removeEventListener('keydown', handleEnterForAnotherOne);
 }
 
 function generateNumber(digits) {
@@ -230,8 +214,8 @@ function checkAnswer() {
     }
 
     // Add event listener for Enter key to trigger the Another One button
-    document.addEventListener('keydown', handleEnterForAnotherOne);
     document.removeEventListener('keydown', handleEnterForSubmit);
+    document.addEventListener('keydown', handleEnterForAnotherOne);
 }
 
 function parseFraction(fraction) {
@@ -268,8 +252,8 @@ function generateAnotherOne() {
     document.getElementById('another-one-button').style.display = 'none';
 
     // Add event listener for Enter key to trigger the Submit button
-    document.addEventListener('keydown', handleEnterForSubmit);
     document.removeEventListener('keydown', handleEnterForAnotherOne);
+    document.addEventListener('keydown', handleEnterForSubmit);
 }
 
 function resetSelection() {
