@@ -48,7 +48,8 @@ p {
     font-size: 36px;
 }
 
-#algebra-choice {
+#algebra-choice,
+#arithmetic-choice {
     display: flex;
     flex-direction: column;
     align-items: center;
