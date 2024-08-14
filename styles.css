@@ -1,75 +1,91 @@
 body {
     font-family: Arial, sans-serif;
-    height: 100vh;
-    margin: 0;
-    background-color: #2E2E2E; /* Dusty chalkboard background */
-    color: #ffffff; /* White text */
+    font-size: 24px; 
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #2E2E2E;
+    text-align: center; 
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
+    background-color: white;
+    padding: 40px; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#answer-box {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-top: 10px;
-    background-color: #ffffff; /* White background for input box */
-    color: #000000; /* Black text for input box */
+h1 {
+    font-size: 36px; 
+}
+
+input[type="text"] {
+    padding: 15px; 
+    margin: 20px 0; 
+    font-size: 24px; 
+    width: 135px; /* Increased width */
+    text-align: center;
 }
 
 button {
     margin-top: 10px;
-    padding: 10px 20px;
-    font-size: 18px; /* Increase text size by 10% */
-    border: none;
-    border-radius: 4px;
-    background-color: #4CAF50; /* Chalkboard green background */
-    color: white;
+    padding: 15px 25px; /* Balanced padding for a refined look */
+    font-size: 22px; /* Slightly reduced font size for a refined look */
+    font-weight: 500; /* Medium font weight for less fat text */
+    font-family: 'Arial', 'Helvetica', sans-serif; /* Professional, sharp font */
+    border: 2px solid #555; /* Solid border for a defined edge */
+    border-radius: 4px; /* Less rounded for a sharper look */
+    background: linear-gradient(145deg, #444, #555); /* Subdued, matte gradient */
+    color: #e0e0e0; /* Light grey text for subtle contrast */
+    text-transform: none; /* No uppercase, maintain original case */
+    letter-spacing: 0.5px; /* Slightly increased spacing for a crisp look */
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3); /* Softer shadow for a matte look */
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #45a049; /* Darker green for hover */
+    background: linear-gradient(145deg, #555, #666); /* Slightly lighter matte gradient on hover */
+    transform: translateY(-1px); /* Subtle lift on hover */
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4); /* Enhanced shadow on hover */
 }
 
-p {
-    font-size: 36px;
+button:active {
+    transform: translateY(0); /* Reset lift effect when pressed */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow on click */
 }
 
 #result {
-    margin-top: 20px;
-    font-size: 36px;
+    margin-top: 30px; /* Increased margin */
+    font-size: 28px; /* Increased font size */
+    font-weight: bold;
 }
 
-#algebra-choice,
-#arithmetic-choice {
+.button-container {
+    width: 100%; /* Make the container span full width */
+    display: flex;
+    justify-content: center; /* Center the button horizontally */
+    margin-bottom: 20px; /* Space between buttons */
+}
+
+#algebra-select-screen {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; /* Center all contents horizontally */
 }
 
-.fraction {
-    display: inline-block;
-    text-align: center;
-    vertical-align: middle;
-    color: #ffffff; /* White text for the fraction */
+button.back-button {
+    margin-top: 20px; /* Slightly larger margin for separation */
+    background-color: #333; /* Different color for the Back button */
+    padding: 10px 20px;
+    font-size: 20px; /* Slightly smaller font size for back buttons */
+    border: 2px solid #444; /* Darker border for the Back button */
 }
 
-.fraction > span {
-    display: block;
-    padding: 0 0.5em;
+button.back-button:hover {
+    background-color: #444; /* Slightly lighter on hover */
 }
 
-.fraction > .denominator {
-    border-top: 1px solid #ffffff; /* White line for the fraction */
-}
+
