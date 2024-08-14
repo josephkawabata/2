@@ -3,46 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choose problem type</title>
+    <title>Math Practice</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div id="problem-type-choice">
-            <p>Choose a problem type:</p>
-            <button onclick="selectOperation('arithmetic')">Arithmetic</button>
-            <button onclick="selectOperation('algebra')">Algebra</button>
-        </div>
-        
-        <div id="arithmetic-choice" style="display: none;">
-            <p>Choose arithmetic problem type:</p>
-            <button onclick="chooseArithmeticType('addition')">Addition</button>
-            <button onclick="chooseArithmeticType('subtraction')">Subtraction</button>
-        </div>
-
-        <div id="digit-choice" style="display: none;">
-            <p id="digit-choice-header">Choose the number of digits:</p>
-            <button onclick="generateMathProblem('one')">One Digit</button>
-            <button onclick="generateMathProblem('two')">Two Digits</button>
-            <button onclick="generateMathProblem('three')">Three Digits</button>
-        </div>
-        
-        <div id="algebra-choice" style="display: none;">
-            <p>Select attributes:</p>
-            <label><input type="checkbox" id="addition-subtraction" value="addition/subtraction"> Addition/Subtraction</label>
-            <label><input type="checkbox" id="multiplication-division" value="multiplication/division"> Multiplication/Division</label>
-            <button onclick="beginAlgebraProblems()">Begin</button>
-        </div>
-
-        <p id="algebra-text" style="display: none;">Solve for x:</p>
-        <p id="math-problem"></p>
-        <input type="text" id="answer-box" placeholder="Enter your answer here" style="display: none;" onkeydown="if(event.key === 'Enter') checkAnswer();">
-        <button onclick="checkAnswer()" id="submit-button" style="display: none;">Submit</button>
-        <p id="result"></p>
-        
-        <button id="another-one-button" style="display: none;" onclick="generateAnotherOne()" onkeydown="navigateButtons(event)">Another One!</button>
-        <button id="new-problem-button" style="display: none;" onclick="resetSelection()" onkeydown="navigateButtons(event)">Back Home</button>
+    <div id="home-screen" class="container">
+        <h1>Select Topic</h1>
+        <button onclick="homeToAlgebra()">Algebra</button>
+        <button onclick="homeToArithmetic()">Arithmetic</button>
     </div>
-    <script src="scripts.js"></script>
+
+    <div id="algebra-select-screen" class="container" style="display:none;">
+        <h1>Categories</h1>
+        <div class="button-container">
+            <button onclick="startBasicAlgebra()">Basic Algebra</button>
+        </div>
+        <div class="button-container">
+            <button onclick="startFactoringQuadraticsOneRoot()">Factoring Quadratrics: 1 Root</button>
+        </div>
+        <button onclick="AlgebraSelectBackToHome()">Back</button> <!-- Back button -->
+    </div>    
+
+    <div id="arithmetic-select-screen" class="container" style="display:none;">
+        <h1>Select Attributes</h1>
+        <label>
+            <input type="checkbox" id="arithmetic-addition-checkbox"> Addition
+        </label>
+        <br>
+        <label>
+            <input type="checkbox" id="arithmetic-subtraction-checkbox"> Subtraction
+        </label>
+        <br><br>
+        <button onclick="startArithmetic()">Start</button>
+        <button onclick="ArithmeticSelectBackToHome()">Back</button> <!-- Back button -->
+    </div>
+   
+    <div id="basic-algebra-screen" class="container" style="display:none;">
+        <h1>Solve for x:</h1>
+        <p id="question">What is 1 + 1?</p>
+        <input type="text" id="answer" placeholder="Your answer">
+        <button onclick="checkAnswer()">Submit</button>
+        <p id="result"></p>
+        <button id="next-question" style="display:none;" onclick="generateBasicAlgebraQuestion()">Next Question</button>
+        <button onclick="BasicAlgebraBackToAlgebraSelect()">Back</button> <!-- Back button -->
+    </div>
+
+    <div id="FactoringQuadraticsOneRoot-screen" class="container" style="display:none;">
+        <h1>Solve for x by factoring:</h1>
+        <p id="FactoringQuadraticsOneRoot-question">x<sup>2</sup> + 6x + 9 = 0</p>
+        <input type="text" id="FactoringQuadraticsOneRoot-answer" placeholder="Your answer">
+        <button onclick="checkFactoringQuadraticsOneRootAnswer()">Submit</button>
+        <p id="FactoringQuadraticsOneRoot-result"></p>
+        <button id="FactoringQuadraticsOneRoot-next-question" style="display:none;" onclick="generateFactoringQuadraticsOneRootQuestion()">Next Question</button>
+        <button onclick="FactoringQuadraticsOneRootBackToAlgebraSelect()">Back</button> <!-- Back button -->
+    </div>    
+
+    <div id="arithmetic-screen" class="container" style="display:none;">
+        <p id="arithmetic-question">What is 1 + 1?</p>
+        <input type="text" id="arithmetic-answer" placeholder="Your answer">
+        <button onclick="checkArithmeticAnswer()">Submit</button>
+        <p id="arithmetic-result"></p>
+        <button id="arithmetic-next-question" style="display:none;" onclick="generateArithmeticQuestion()">Next Question</button>
+        <button onclick="ArithmeticBackToArithmeticSelect()">Back</button> <!-- Back button -->
+    </div>
+    
+    <script src="script.js"></script>
 </body>
 </html>
