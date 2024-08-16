@@ -11,18 +11,7 @@
         <h1>Select Topic</h1>
         <button onclick="homeToAlgebra()">Algebra</button>
         <button onclick="homeToArithmetic()">Arithmetic</button>
-    </div>
-
-    <div id="algebra-select-screen" class="container" style="display:none;">
-        <h1>Categories</h1>
-        <div class="button-container">
-            <button onclick="startBasicAlgebra()">Basic Algebra</button>
-        </div>
-        <div class="button-container">
-            <button onclick="startFactoringQuadraticsOneRoot()">Factoring Quadratrics: 1 Root</button>
-        </div>
-        <button onclick="AlgebraSelectBackToHome()">Back</button> <!-- Back button -->
-    </div>    
+    </div>  
 
     <div id="arithmetic-select-screen" class="container" style="display:none;">
         <h1>Select Attributes</h1>
@@ -37,11 +26,37 @@
         <button onclick="startArithmetic()">Start</button>
         <button onclick="ArithmeticSelectBackToHome()">Back</button> <!-- Back button -->
     </div>
+
+    <div id="algebra-select-screen" class="container" style="display:none;">
+        <h1>Categories</h1>
+        <div class="button-container">
+            <button onclick="startBasicAlgebra()">Basic Algebra</button>
+        </div>
+        <div class="button-container">
+            <button onclick="startFactoringQuadraticsOneRoot()">Factoring Quadratrics: 1 Root</button>
+        </div>
+        <div class="button-container">
+            <button onclick="startFactoringQuadratics2Roots()">Factoring Quadratrics: 2 Roots</button>
+        </div>
+        <div class="button-container">
+            <button onclick="startCompleteTheSquare()">Complete The Square</button>
+        </div>
+        <button onclick="AlgebraSelectBackToHome()">Back</button>
+    </div>  
+
+    <div id="arithmetic-screen" class="container" style="display:none;">
+        <p id="arithmetic-question">What is 1 + 1?</p>
+        <input type="text" id="arithmetic-answer" placeholder="Your answer" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your answer'">
+        <button onclick="checkArithmeticAnswer()">Submit</button>
+        <p id="arithmetic-result"></p>
+        <button id="arithmetic-next-question" style="display:none;" onclick="generateArithmeticQuestion()">Next Question</button>
+        <button onclick="ArithmeticBackToArithmeticSelect()">Back</button> <!-- Back button -->
+    </div>
    
     <div id="basic-algebra-screen" class="container" style="display:none;">
         <h1>Solve for x:</h1>
         <p id="question">What is 1 + 1?</p>
-        <input type="text" id="answer" placeholder="Your answer">
+        <input type="text" id="answer" placeholder="Your answer" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your answer'">
         <button onclick="checkAnswer()">Submit</button>
         <p id="result"></p>
         <button id="next-question" style="display:none;" onclick="generateBasicAlgebraQuestion()">Next Question</button>
@@ -51,22 +66,35 @@
     <div id="FactoringQuadraticsOneRoot-screen" class="container" style="display:none;">
         <h1>Solve for x by factoring:</h1>
         <p id="FactoringQuadraticsOneRoot-question">x<sup>2</sup> + 6x + 9 = 0</p>
-        <input type="text" id="FactoringQuadraticsOneRoot-answer" placeholder="Your answer">
+        <input type="text" id="FactoringQuadraticsOneRoot-answer" placeholder="Your answer" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your answer'">
         <button onclick="checkFactoringQuadraticsOneRootAnswer()">Submit</button>
         <p id="FactoringQuadraticsOneRoot-result"></p>
         <button id="FactoringQuadraticsOneRoot-next-question" style="display:none;" onclick="generateFactoringQuadraticsOneRootQuestion()">Next Question</button>
         <button onclick="FactoringQuadraticsOneRootBackToAlgebraSelect()">Back</button> <!-- Back button -->
-    </div>    
-
-    <div id="arithmetic-screen" class="container" style="display:none;">
-        <p id="arithmetic-question">What is 1 + 1?</p>
-        <input type="text" id="arithmetic-answer" placeholder="Your answer">
-        <button onclick="checkArithmeticAnswer()">Submit</button>
-        <p id="arithmetic-result"></p>
-        <button id="arithmetic-next-question" style="display:none;" onclick="generateArithmeticQuestion()">Next Question</button>
-        <button onclick="ArithmeticBackToArithmeticSelect()">Back</button> <!-- Back button -->
-    </div>
+    </div> 
     
+    <div id="FactoringQuadratics2Roots-screen" class="container" style="display:none;">
+        <h1>Solve for x by factoring:</h1>
+        <p id="FactoringQuadratics2Roots-question">x<sup>2</sup> + 6x + 9 = 0</p>
+        <input type="text" id="FactoringQuadratics2Roots-answer" placeholder="x1, x2" onfocus="this.placeholder = ''" onblur="this.placeholder = 'x1, x2'">
+        <button onclick="checkFactoringQuadratics2RootsAnswer()">Submit</button>
+        <p id="FactoringQuadratics2Roots-result"></p>
+        <button id="FactoringQuadratics2Roots-next-question" style="display:none;" onclick="generateFactoringQuadratics2RootsQuestion()">Next Question</button>
+        <button onclick="FactoringQuadratics2RootsBackToAlgebraSelect()">Back</button> <!-- Back button -->
+    </div> 
+
+    <div id="CompleteTheSquare-screen" class="container" style="display:none;">
+        <h1>Complete the square:</h1>
+        <p id="CompleteTheSquare-question">x<sup>2</sup> + 6x + 9 = 0</p>
+        <input type="text" id="CompleteTheSquare-answer" placeholder="(x+_)^2 + _" onfocus="this.placeholder = ''" onblur="this.placeholder ='(x+_)^2 + _'" oninput="formatExponent()" style="width: 200px;">
+        <button onclick="checkCompleteTheSquareAnswer()">Submit</button>
+        <p id="CompleteTheSquare-result"></p>
+        <button id="CompleteTheSquare-next-question" style="display:none;" onclick="generateCompleteTheSquareQuestion()">Next Question</button>
+        <button onclick="CompleteTheSquareBackToAlgebraSelect()">Back</button>
+    </div>    
+    
+    
+
     <script src="script.js"></script>
 </body>
 </html>
