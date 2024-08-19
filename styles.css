@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    font-size: 24px; 
+    font-size: 34px; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,84 +8,175 @@ body {
     margin: 0;
     text-align: center;
     background: linear-gradient(90deg, #4a4a4a, #2f2f2f, #4a4a4a);
+    color: #ffffff; /* Ensure text color is white */
+    text-shadow: none; /* Remove any text shadow to avoid color hue */
 }
 
+/* Container Styles */
+/* Main Container - Styled Like Explanation Box */
 .container {
-    background-color: white;
+    background: linear-gradient(145deg, #3a3a3d, #6a6a6d); /* Gradient background similar to explanation box */
     padding: 40px; 
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px; /* Match the border radius */
+    box-shadow: 0 0 30px rgba(78, 204, 163, 0.8), inset 0 0 15px rgba(78, 204, 163, 0.5); /* Outer and inner glow */
+    border: 3px solid #4ecca3; /* Border color matching explanation box */
+    font-family: 'Share Tech Mono', 'Monospace'; /* Same font as explanation box */
+    color: #ffffff; /* Text color */
+    letter-spacing: 1.5px; /* Match letter spacing */
+    text-shadow: 0 0 10px #4ecca3, 0 0 20px #4ecca3; /* Glowing text effect */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+/* Headings */
 h1 {
     font-size: 36px; 
 }
 
+/* Input Field Styles */
 input[type="text"] {
     padding: 15px; 
     margin: 20px 0; 
     font-size: 24px; 
-    width: 135px; /* Increased width */
+    width: 135px; 
     text-align: center;
 }
 
+/* Button Styles */
 button {
-    margin-top: 10px;
-    padding: 15px 25px; /* Balanced padding for a refined look */
-    font-size: 22px; /* Slightly reduced font size for a refined look */
-    font-weight: 500; /* Medium font weight for less fat text */
-    font-family: 'Arial', 'Helvetica', sans-serif; /* Professional, sharp font */
-    border: 2px solid #555; /* Solid border for a defined edge */
-    border-radius: 4px; /* Less rounded for a sharper look */
-    background: linear-gradient(145deg, #444, #555); /* Subdued, matte gradient */
-    color: #e0e0e0; /* Light grey text for subtle contrast */
-    text-transform: none; /* No uppercase, maintain original case */
-    letter-spacing: 0.5px; /* Slightly increased spacing for a crisp look */
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3); /* Softer shadow for a matte look */
-    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    margin-top: 20px;
+    padding: 15px 25px;
+    font-size: 22px;
+    font-weight: 500;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    border: 2px solid #555;
+    border-radius: 4px;
+    background: linear-gradient(145deg, #444, #555);
+    color: #e0e0e0;
+    text-transform: none;
+    letter-spacing: 0.5px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
+    width: 100%;
+    max-width: 300px;
 }
 
 button:hover {
-    background: linear-gradient(145deg, #555, #666); /* Slightly lighter matte gradient on hover */
-    transform: translateY(-1px); /* Subtle lift on hover */
-    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4); /* Enhanced shadow on hover */
+    background: linear-gradient(145deg, #555, #666);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4);
 }
 
 button:active {
-    transform: translateY(0); /* Reset lift effect when pressed */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow on click */
-}
-
-#result {
-    margin-top: 30px; /* Increased margin */
-    font-size: 28px; /* Increased font size */
-    font-weight: bold;
-}
-
-.button-container {
-    width: 100%; /* Make the container span full width */
-    display: flex;
-    justify-content: center; /* Center the button horizontally */
-    margin-bottom: 20px; /* Space between buttons */
-}
-
-#algebra-select-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center all contents horizontally */
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 button.back-button {
-    margin-top: 20px; /* Slightly larger margin for separation */
-    background-color: #333; /* Different color for the Back button */
+    margin-top: 20px;
+    background-color: #333;
     padding: 10px 20px;
-    font-size: 20px; /* Slightly smaller font size for back buttons */
-    border: 2px solid #444; /* Darker border for the Back button */
+    font-size: 20px;
+    border: 2px solid #444;
 }
 
 button.back-button:hover {
-    background-color: #444; /* Slightly lighter on hover */
+    background-color: #444;
 }
 
+/* Button Selected State */
+.button-selected {
+    background: linear-gradient(145deg, #28a745, #34d058);
+    box-shadow: inset 0 4px 7px rgba(0, 0, 0, 0.4);
+    transform: translateY(1px);
+    border-color: #28a745;
+    color: #ffffff;
+}
 
+.button-selected:hover {
+    background: linear-gradient(145deg, #28a745, #34d058);
+    box-shadow: inset 0 4px 7px rgba(0, 0, 0, 0.4);
+    transform: translateY(1px);
+}
+
+/* Result Text */
+#result {
+    margin-top: 30px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Explanation Box */
+.explanation-box {
+    position: absolute;
+    left: 170px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(145deg, #3a3a3d, #6a6a6d);
+    padding: 15px;
+    border: 3px solid #4ecca3;
+    box-shadow: 0 0 30px rgba(78, 204, 163, 0.8), inset 0 0 15px rgba(78, 204, 163, 0.5);
+    font-size: 28px;
+    font-weight: normal;
+    color: #ffffff;
+    z-index: 1000;
+    width: 350px;
+    height: 400px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Share Tech Mono', 'Monospace';
+    border-radius: 15px;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 10px #4ecca3, 0 0 20px #4ecca3;
+}
+
+/* Button Container */
+.button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Double Angle Identities Easy Difficulty */
+#DoubleAngleIdentitiesEasy-difficulty {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    bottom: 50px;
+}
+
+/* Clickable Text Links - Plain White, No Glow */
+a {
+    color: #ffffff; /* White color for readability */
+    font-size: 28px;
+    font-weight: normal;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 20px;
+    display: block;
+    font-family: 'Share Tech Mono', 'Monospace'; /* Same font as the explanation box */
+    letter-spacing: 1.5px; /* Similar letter spacing */
+    text-shadow: none; /* Remove glow effect */
+    transition: color 0.3s ease; /* Smooth transition on hover */
+}
+
+a:hover {
+    color: #e0e0e0; /* Slight color change on hover */
+    text-shadow: none; /* Ensure no glow on hover */
+}
+
+/* Question Text - Plain White, No Glow */
+.question-text, p {
+    color: #ffffff; /* White color for readability */
+    text-shadow: none; /* Remove glow effect */
+    font-size: 34px; /* Adjust size if necessary */
+}
