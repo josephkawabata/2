@@ -1,6 +1,7 @@
+/* Global Styles */
 body {
     font-family: Arial, sans-serif;
-    font-size: 34px; 
+    font-size: 34px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,40 +9,82 @@ body {
     margin: 0;
     text-align: center;
     background: linear-gradient(90deg, #4a4a4a, #2f2f2f, #4a4a4a);
-    color: #ffffff; /* Ensure text color is white */
-    text-shadow: none; /* Remove any text shadow to avoid color hue */
+    color: #ffffff;
 }
 
-/* Container Styles */
-/* Main Container - Styled Like Explanation Box */
+/* Explanation Box - Banana Cream Gradient Theme */
+.explanation-box {
+    position: absolute;
+    left: 200px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(145deg, #fffacd, #ffeb99); /* Soft banana cream gradient */
+    padding: 10px;
+    border: 2px solid #d4a017; /* Warm golden border */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(212, 160, 23, 0.2); /* Subtle shadow for depth */
+    font-size: 28px;
+    font-weight: 400;
+    color: #4b4b4b; /* Dark grey text for readability */
+    z-index: 1000;
+    width: 400px;
+    height: 300px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial', sans-serif; /* Clean and modern font */
+    border-radius: 15px; /* Smooth rounded corners */
+    letter-spacing: 0.5px;
+    text-shadow: none; /* No text shadow for clarity */
+}
+
+/* Container - Banana Cream Gradient Theme */
 .container {
-    background: linear-gradient(145deg, #3a3a3d, #6a6a6d); /* Gradient background similar to explanation box */
-    padding: 40px; 
-    border-radius: 15px; /* Match the border radius */
-    box-shadow: 0 0 30px rgba(78, 204, 163, 0.8), inset 0 0 15px rgba(78, 204, 163, 0.5); /* Outer and inner glow */
-    border: 3px solid #4ecca3; /* Border color matching explanation box */
-    font-family: 'Share Tech Mono', 'Monospace'; /* Same font as explanation box */
-    color: #ffffff; /* Text color */
-    letter-spacing: 1.5px; /* Match letter spacing */
-    text-shadow: 0 0 10px #4ecca3, 0 0 20px #4ecca3; /* Glowing text effect */
+    background: linear-gradient(145deg, #fffacd, #ffeb99); /* Soft banana cream gradient */
+    padding: 40px 30px;
+    border-radius: 15px; /* Smooth rounded corners */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Subtle outer shadow */
+    border: 2px solid #d4a017; /* Warm golden border */
+    font-family: 'Arial', sans-serif; /* Clean and modern font */
+    color: #4b4b4b; /* Dark grey text for readability */
+    letter-spacing: 0.5px;
+    text-shadow: none; /* No text shadow for clarity */
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* Headings */
+/* Heading Styles */
 h1 {
-    font-size: 36px; 
+    font-size: 36px;
+    margin-top: 0px;
+    margin-bottom: 70px;
 }
 
 /* Input Field Styles */
-input[type="text"] {
-    padding: 15px; 
-    margin: 20px 0; 
-    font-size: 24px; 
-    width: 135px; 
+.input-button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.input-button-wrapper input[type="text"] {
+    margin: 0;
+    margin-right: 15px;
+    padding: 15px;
+    font-size: 24px;
+    width: 135px;
     text-align: center;
+}
+
+.input-button-wrapper button.submit-button {
+    margin: 0;
+    padding: 15px 25px;
+    font-size: 22px;
+    flex-shrink: 0;
+    width: auto;
 }
 
 /* Button Styles */
@@ -51,55 +94,104 @@ button {
     font-size: 22px;
     font-weight: 500;
     font-family: 'Arial', 'Helvetica', sans-serif;
-    border: 2px solid #555;
     border-radius: 4px;
-    background: linear-gradient(145deg, #444, #555);
-    color: #e0e0e0;
+    color: #ffffff;
     text-transform: none;
     letter-spacing: 0.5px;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
     transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
     width: 100%;
-    max-width: 300px;
+    max-width: 200px;
 }
 
-button:hover {
-    background: linear-gradient(145deg, #555, #666);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4);
+/* Force Subtle Gradient Green Button Styles (Start, Submit, Next Question) */
+.container .start-button,
+.container .submit-button,
+.container button[id*="next-question"] {
+    background: linear-gradient(145deg, #4CAF50, #388E3C, #2E7D32) !important; /* Pronounced green gradient */
+    border: 2px solid #2E7D32 !important;
+    color: #ffffff !important;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3) !important;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
+    cursor: pointer !important;
 }
 
-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+.container .start-button:hover,
+.container .submit-button:hover,
+.container button[id*="next-question"]:hover {
+    background: linear-gradient(145deg, #43A047, #388E3C, #2E7D32) !important; /* Subtle gradient change on hover */
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4) !important;
 }
 
+.container .start-button:active,
+.container .submit-button:active,
+.container button[id*="next-question"]:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Force Back Button - Red Style */
+.container .back-button {
+    background: linear-gradient(145deg, #8d4e4e, #a65f5f) !important;
+    border: 2px solid #8d4e4e !important;
+    color: #ffffff !important;
+    padding: 10px 20px !important;
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    font-family: 'Arial', 'Helvetica', sans-serif !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    width: auto !important;
+    margin-top: 15px !important;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.container .back-button:hover {
+    background: linear-gradient(145deg, #a65f5f, #8d4e4e) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4) !important;
+}
+
+.container .back-button:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Ensure this rule is applied last */
 button.back-button {
-    margin-top: 20px;
-    background-color: #333;
-    padding: 10px 20px;
-    font-size: 20px;
-    border: 2px solid #444;
+    background: linear-gradient(145deg, #8d4e4e, #a65f5f) !important;
+    border: 2px solid #8d4e4e !important;
+    color: #ffffff !important;
 }
 
-button.back-button:hover {
-    background-color: #444;
-}
-
-/* Button Selected State */
+/* Selected Difficulty Button - Green */
 .button-selected {
-    background: linear-gradient(145deg, #28a745, #34d058);
-    box-shadow: inset 0 4px 7px rgba(0, 0, 0, 0.4);
-    transform: translateY(1px);
-    border-color: #28a745;
-    color: #ffffff;
+    background: linear-gradient(145deg, #4e8d4e, #5fa65f) !important;
+    border: 2px solid #4e8d4e !important;
+    color: #ffffff !important;
+    box-shadow: inset 0 4px 7px rgba(0, 0, 0, 0.4) !important;
+    transform: translateY(1px) !important;
 }
 
 .button-selected:hover {
-    background: linear-gradient(145deg, #28a745, #34d058);
-    box-shadow: inset 0 4px 7px rgba(0, 0, 0, 0.4);
-    transform: translateY(1px);
+    background: linear-gradient(145deg, #5fa65f, #4e8d4e) !important;
+    box-shadow: inset 0 4px 7px rgba(0, 0, 0, 0.4) !important;
+    transform: translateY(1px) !important;
+}
+
+/* Unselected Difficulty Buttons - Grey */
+button:not(.button-selected) {
+    background: #7f7f7f !important;
+    border: 2px solid #666666 !important;
+    color: #ffffff !important;
+}
+
+button:not(.button-selected):hover {
+    background: #9f9f9f !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4) !important;
 }
 
 /* Result Text */
@@ -109,42 +201,35 @@ button.back-button:hover {
     font-weight: bold;
 }
 
-/* Explanation Box */
-.explanation-box {
-    position: absolute;
-    left: 170px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: linear-gradient(145deg, #3a3a3d, #6a6a6d);
-    padding: 15px;
-    border: 3px solid #4ecca3;
-    box-shadow: 0 0 30px rgba(78, 204, 163, 0.8), inset 0 0 15px rgba(78, 204, 163, 0.5);
-    font-size: 28px;
-    font-weight: normal;
-    color: #ffffff;
-    z-index: 1000;
-    width: 350px;
-    height: 400px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Share Tech Mono', 'Monospace';
-    border-radius: 15px;
-    letter-spacing: 1.5px;
-    text-shadow: 0 0 10px #4ecca3, 0 0 20px #4ecca3;
-}
-
 /* Button Container */
 .button-container {
+    margin: -20px 0;
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
-/* Double Angle Identities Easy Difficulty */
-#DoubleAngleIdentitiesEasy-difficulty {
+/* Adjust Button Spacing in Select Screens */
+a, .button-container button {
+    margin: 5px 0;
+    padding: 15px 20px;
+    max-width: 550px;
+    width: 500%;
+}
+
+/* Adjust button styling for the home screen */
+#home-screen a {
+    margin: 10px 0;
+    padding: 15px 20px;
+    max-width: 250px;
+    width: 80%;
+    display: block;
+    text-align: center;
+}
+
+/* Difficulty Buttons */
+#difficulty-button {
     display: flex;
     justify-content: center;
     margin-top: 20px;
@@ -152,31 +237,37 @@ button.back-button:hover {
     position: absolute;
     width: 100%;
     bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-/* Clickable Text Links - Plain White, No Glow */
+/* Clickable Text Links - Subtle Background-Matching Theme with Darker Yellow Borders and Blue Hover */
 a {
-    color: #ffffff; /* White color for readability */
-    font-size: 28px;
-    font-weight: normal;
+    color: #3366FF; /* Dark grey text for readability */
+    font-size: 26px;
+    font-weight: 500;
     text-decoration: none;
     cursor: pointer;
-    margin-top: 20px;
     display: block;
-    font-family: 'Share Tech Mono', 'Monospace'; /* Same font as the explanation box */
-    letter-spacing: 1.5px; /* Similar letter spacing */
-    text-shadow: none; /* Remove glow effect */
-    transition: color 0.3s ease; /* Smooth transition on hover */
+    font-family: 'Arial', sans-serif; /* Clean and modern font */
+    text-align: center;
+    padding: 15px 20px;
+    margin: 10px 0;
+    border-radius: 8px; /* Smooth rounded corners */
+    background: linear-gradient(145deg, #fffacd, #ffeb99); /* Banana cream gradient to match background */
+    border: 2px solid #d4a017; /* Darker yellow border */
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle inner shadow for depth */
 }
 
+/* Hover Effect for Clickable Text Links */
 a:hover {
-    color: #e0e0e0; /* Slight color change on hover */
-    text-shadow: none; /* Ensure no glow on hover */
+    text-decoration: underline; /* Underline the text on hover */
 }
 
 /* Question Text - Plain White, No Glow */
 .question-text, p {
-    color: #ffffff; /* White color for readability */
-    text-shadow: none; /* Remove glow effect */
-    font-size: 34px; /* Adjust size if necessary */
+    color: black;
+    text-shadow: none;
+    font-size: 34px;
 }
