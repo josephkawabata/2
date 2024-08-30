@@ -1,3 +1,16 @@
+// Variables to store the last generated question
+let lastArithmeticQuestion = '';
+let lastBasicAlgebraQuestion = '';
+let lastFactorQuadraticsOneRootEasyQuestion = '';
+let lastFactorQuadraticsOneRootMediumQuestion = '';
+let lastFactorQuadratics2RootsQuestion = '';
+let lastCompleteTheSquareQuestion = '';
+let lastUnitCircleQuizQuestion = '';
+let lastDoubleAngleIdentitiesEasyQuestion = '';
+let lastDoubleAngleIdentitiesMediumQuestion = '';
+let lastDegreesRadiansQuestion = '';
+
+
 // Initialize the home screen when the page loads
 window.onload = function() {
     console.log('Page loaded');
@@ -20,6 +33,12 @@ function getRandomDigitMax5PosorNeg() {
 
 function getRandomDigitPosorNeg() {
     const digit = Math.floor(Math.random() * 9) + 1; // Get a random digit between 1 and 9
+    const sign = Math.random() < 0.5 ? -1 : 1; // Randomly choose -1 or 1
+    return digit * sign; // Return the digit with a random sign
+}
+
+function getRandomDigitPosOrNeg2To9() {
+    const digit = Math.floor(Math.random() * 8) + 2; // Generate a random integer between 2 and 9
     const sign = Math.random() < 0.5 ? -1 : 1; // Randomly choose -1 or 1
     return digit * sign; // Return the digit with a random sign
 }
@@ -55,20 +74,35 @@ function startArithmetic() {
 
     document.getElementById('arithmetic-select-screen').style.display = 'none';
     document.getElementById('arithmetic-screen').style.display = 'block';
+    document.getElementById('explanation-box').textContent = 'Simple stuff';
     generateArithmeticQuestion();
 }
 
 function generateArithmeticQuestion() {
-    const digit1 = getRandomDigit();
-    const digit2 = getRandomDigit();
-    let questionText;
+    let digit1, digit2, questionText;
+    
+    do {
+        digit1 = getRandomDigit();
+        digit2 = getRandomDigit();
 
-    if (window.selectedAttributes.addition && window.selectedAttributes.subtraction) {
-        const isAddition = Math.random() < 0.5;
-        if (isAddition) {
+        if (window.selectedAttributes.addition && window.selectedAttributes.subtraction) {
+            const isAddition = Math.random() < 0.5;
+            if (isAddition) {
+                window.currentAnswer = digit1 + digit2;
+                questionText = `What is ${digit1} + ${digit2}?`;
+            } else {
+                if (digit1 < digit2) {
+                    window.currentAnswer = digit2 - digit1;
+                    questionText = `What is ${digit2} - ${digit1}?`;
+                } else {
+                    window.currentAnswer = digit1 - digit2;
+                    questionText = `What is ${digit1} - ${digit2}?`;
+                }
+            }
+        } else if (window.selectedAttributes.addition) {
             window.currentAnswer = digit1 + digit2;
             questionText = `What is ${digit1} + ${digit2}?`;
-        } else {
+        } else if (window.selectedAttributes.subtraction) {
             if (digit1 < digit2) {
                 window.currentAnswer = digit2 - digit1;
                 questionText = `What is ${digit2} - ${digit1}?`;
@@ -77,18 +111,9 @@ function generateArithmeticQuestion() {
                 questionText = `What is ${digit1} - ${digit2}?`;
             }
         }
-    } else if (window.selectedAttributes.addition) {
-        window.currentAnswer = digit1 + digit2;
-        questionText = `What is ${digit1} + ${digit2}?`;
-    } else if (window.selectedAttributes.subtraction) {
-        if (digit1 < digit2) {
-            window.currentAnswer = digit2 - digit1;
-            questionText = `What is ${digit2} - ${digit1}?`;
-        } else {
-            window.currentAnswer = digit1 - digit2;
-            questionText = `What is ${digit1} - ${digit2}?`;
-        }
-    }
+    } while (questionText === lastArithmeticQuestion);
+    
+    lastArithmeticQuestion = questionText;
 
     document.getElementById('arithmetic-question').textContent = questionText;
     document.getElementById('arithmetic-result').textContent = '';
@@ -98,11 +123,9 @@ function generateArithmeticQuestion() {
 
 function checkArithmeticAnswer() {
     const userAnswer = parseInt(document.getElementById('arithmetic-answer').value, 10);
-    const resultText = userAnswer === window.currentAnswer ? 'Correct!' : 'Incorrect, try again.';
+    const resultText = userAnswer === window.currentAnswer ? 'Correct!' : `Nope, answer is ${window.currentAnswer}.`;
     document.getElementById('arithmetic-result').textContent = resultText;
-    if (userAnswer === window.currentAnswer) {
-        document.getElementById('arithmetic-next-question').style.display = 'inline';
-    }
+    document.getElementById('arithmetic-next-question').style.display = 'inline';
 }
 
 function startBasicAlgebra() {
@@ -113,19 +136,21 @@ function startBasicAlgebra() {
 
     document.getElementById('algebra-select-screen').style.display = 'none';
     document.getElementById('basic-algebra-screen').style.display = 'block';
+    document.getElementById('explanation-box').textContent = 'Enter the value of x that solves the equation.';
     generateBasicAlgebraQuestion();
 }
 
 function generateBasicAlgebraQuestion() {
-    const digit1 = getRandomDigit();
-    const digit2 = getRandomDigit();
-    let questionText;
-    let randomOperator = Math.random() < 0.5 ? '+' : '-';
-    let xIsFirst = Math.random() < 0.5;
+    let digit1, digit2, questionText;
+    let randomOperator, xIsFirst;
+    
+    do {
+        digit1 = getRandomDigit();
+        digit2 = getRandomDigit();
+        randomOperator = Math.random() < 0.5 ? '+' : '-';
+        xIsFirst = Math.random() < 0.5;
 
-    if (window.selectedAttributes.addition && window.selectedAttributes.subtraction) {
         if (xIsFirst) {
-            // Format: x +/- a = b
             if (randomOperator === '+') {
                 window.currentAnswer = digit2 - digit1;
                 questionText = `x + ${digit1} = ${digit2}`;
@@ -134,7 +159,6 @@ function generateBasicAlgebraQuestion() {
                 questionText = `x - ${digit1} = ${digit2}`;
             }
         } else {
-            // Format: a +/- x = b
             if (randomOperator === '+') {
                 window.currentAnswer = digit2 - digit1;
                 questionText = `${digit1} + x = ${digit2}`;
@@ -143,116 +167,145 @@ function generateBasicAlgebraQuestion() {
                 questionText = `${digit1} - x = ${digit2}`;
             }
         }
-    }
+    } while (questionText === lastBasicAlgebraQuestion);
+    
+    lastBasicAlgebraQuestion = questionText;
 
-    document.getElementById('question').textContent = questionText;
-    document.getElementById('result').textContent = '';
-    document.getElementById('answer').value = '';
-    document.getElementById('next-question').style.display = 'none';
+    document.getElementById('basic-algebra-question').textContent = questionText;
+    document.getElementById('basic-algebra-result').textContent = '';
+    document.getElementById('basic-algebra-answer').value = '';
+    document.getElementById('basic-algebra-next-question').style.display = 'none';
 }
 
-function checkAnswer() {
-    const userAnswer = parseInt(document.getElementById('answer').value, 10);
-    const resultText = userAnswer === window.currentAnswer ? 'Correct!' : 'Incorrect, try again.';
-    document.getElementById('result').textContent = resultText;
-    if (userAnswer === window.currentAnswer) {
-        document.getElementById('next-question').style.display = 'inline';
-    }
+function checkBasicAlgebraAnswer() {
+    const userAnswer = parseInt(document.getElementById('basic-algebra-answer').value, 10);
+    const resultText = userAnswer === window.currentAnswer ? 'Correct!' : `Nope, answer is ${window.currentAnswer}.`;
+    document.getElementById('basic-algebra-result').textContent = resultText;
+    document.getElementById('basic-algebra-next-question').style.display = 'inline';
 }
 
-function startFactoringQuadraticsOneRoot() {
+function startFactorQuadraticsOneRootEasy() {
     document.getElementById('algebra-select-screen').style.display = 'none';
-    document.getElementById('FactoringQuadraticsOneRoot-screen').style.display = 'block';
-    generateFactoringQuadraticsOneRootQuestion();
+    document.getElementById('FactorQuadraticsOneRootMedium-screen').style.display = 'none';
+    document.getElementById('FactorQuadraticsOneRootEasy-screen').style.display = 'block';
+    document.getElementById('explanation-box').innerHTML = 'Enter the value of x that solves the equation. <br> <br> The quadratic formula is not needed here; just factor.';
+    selectDifficultyUpToMedium('easy');
+    generateFactorQuadraticsOneRootEasyQuestion();
 }
 
-function generateFactoringQuadraticsOneRootQuestion() {
-    const a = getRandomDigitMax3(); 
-    let b;
-    if (a === 3){
-        b = getRandomDigitMax5PosorNeg() * 2 * a;
-    }
-    else {
+function generateFactorQuadraticsOneRootEasyQuestion() {
+    let a = 1, b, c, questionText;
+    
+    do {
         b = getRandomDigitPosorNeg() * 2 * a;
-    }
-    const c = Math.pow(b / 2 , 2)/a;  // Calculate 'c' to ensure the discriminant is zero
-    
-    window.currentAnswer = -(b / (2 * a));  // The single real root
+        c = Math.pow(b / 2 , 2)/a;
+        
+        window.currentAnswer = -(b / (2 * a));
+        
+        const aText = a === 1 ? '' : a;
 
-    // If 'a' is 1, we don't need to display it
-    const aText = a === 1 ? '' : a;
-
-    let questionText;
-    if (b < 0){
-        questionText = `${aText}x<sup>2</sup> - ${-b}x + ${c} = 0`;}
-    else {
-        questionText = `${aText}x<sup>2</sup> + ${b}x + ${c} = 0`;}
-
-    document.getElementById('FactoringQuadraticsOneRoot-question').innerHTML = questionText;
-    document.getElementById('FactoringQuadraticsOneRoot-result').textContent = '';
-    document.getElementById('FactoringQuadraticsOneRoot-answer').value = '';
-    document.getElementById('FactoringQuadraticsOneRoot-next-question').style.display = 'none';
-}
-
-function checkFactoringQuadraticsOneRootAnswer() {
-    const userAnswer = parseFloat(document.getElementById('FactoringQuadraticsOneRoot-answer').value);
-    const resultText = userAnswer === window.currentAnswer ? 'Correct!' : 'Incorrect, try again.';
-    document.getElementById('FactoringQuadraticsOneRoot-result').textContent = resultText;
-    if (userAnswer === window.currentAnswer) {
-        document.getElementById('FactoringQuadraticsOneRoot-next-question').style.display = 'inline';
-    }
-}
-
-function startFactoringQuadratics2Roots() {
-    document.getElementById('algebra-select-screen').style.display = 'none';
-    document.getElementById('FactoringQuadratics2Roots-screen').style.display = 'block';
-    generateFactoringQuadratics2RootsQuestion();
-}
-
-function generateFactoringQuadratics2RootsQuestion() {
-    const x1 = getRandomDigitPosorNeg(); 
-    let x2 = getRandomDigitPosorNeg();
-    if (x2 === x1){
-        x2 = 5
-    }
-    const a = 1;
-
-    window.currentAnswer = [-(x1), -(x2)];
-
-    const aText = a === 1 ? '' : a;
-
-    // Function to format the coefficient with proper sign
-    function formatCoefficient(coef) {
-        if (coef > 0) {
-            return `+ ${coef}`;
-        } else if (coef < 0) {
-            return `- ${Math.abs(coef)}`;
+        if (b < 0) {
+            questionText = `${aText}x<sup>2</sup> - ${-b}x + ${c} = 0`;
+        } else {
+            questionText = `${aText}x<sup>2</sup> + ${b}x + ${c} = 0`;
         }
-        return ''; // Return an empty string for a coefficient of 0
-    }
+    } while (questionText === lastFactorQuadraticsOneRootEasyQuestion);
 
-    const x1x2Sum = x1 + x2;
-    const x1x2Product = x1 * x2;
+    lastFactorQuadraticsOneRootEasyQuestion = questionText;
 
-    // Generate the question text, omitting the middle term if its coefficient is 0
-    let questionText = `${aText}x<sup>2</sup>`;
-    
-    if (x1x2Sum !== 0) {
-        questionText += ` ${formatCoefficient(x1x2Sum)}x`;
-    }
-    
-    questionText += ` ${formatCoefficient(x1x2Product)} = 0`;
-
-    document.getElementById('FactoringQuadratics2Roots-question').innerHTML = questionText;
-    document.getElementById('FactoringQuadratics2Roots-result').textContent = '';
-    document.getElementById('FactoringQuadratics2Roots-answer').value = '';
-    document.getElementById('FactoringQuadratics2Roots-next-question').style.display = 'none';
+    document.getElementById('FactorQuadraticsOneRootEasy-question').innerHTML = questionText;
+    document.getElementById('FactorQuadraticsOneRootEasy-result').textContent = '';
+    document.getElementById('FactorQuadraticsOneRootEasy-answer').value = '';
+    document.getElementById('FactorQuadraticsOneRootEasy-next-question').style.display = 'none';
 }
 
+function checkFactorQuadraticsOneRootEasyAnswer() {
+    const userAnswer = parseFloat(document.getElementById('FactorQuadraticsOneRootEasy-answer').value);
+    const resultText = userAnswer === window.currentAnswer ? 'Correct!' : `Nope, answer is ${window.currentAnswer}.`;
+    document.getElementById('FactorQuadraticsOneRootEasy-result').textContent = resultText;
+    document.getElementById('FactorQuadraticsOneRootEasy-next-question').style.display = 'inline';
+}
 
+function startFactorQuadraticsOneRootMedium() {
+    document.getElementById('FactorQuadraticsOneRootEasy-screen').style.display = 'none';
+    document.getElementById('FactorQuadraticsOneRootMedium-screen').style.display = 'block';
+    generateFactorQuadraticsOneRootMediumQuestion();
+}
 
-function checkFactoringQuadratics2RootsAnswer() {
-    const userAnswer = document.getElementById('FactoringQuadratics2Roots-answer').value
+function generateFactorQuadraticsOneRootMediumQuestion() {
+    let a, b, c, questionText;
+    
+    do {
+        a = getRandomDigitPosOrNeg2To9();
+        b = getRandomDigitPosorNeg() * 2 * a;
+        c = Math.pow(b / 2 , 2)/a;
+        
+        window.currentAnswer = -(b / (2 * a));
+        
+        const aText = a === 1 ? '' : a;
+
+        if (b < 0) {
+            questionText = `${aText}x<sup>2</sup> - ${-b}x + ${c} = 0`;
+        } else {
+            questionText = `${aText}x<sup>2</sup> + ${b}x + ${c} = 0`;
+        }
+    } while (questionText === lastFactorQuadraticsOneRootMediumQuestion);
+
+    lastFactorQuadraticsOneRootMediumQuestion = questionText;
+
+    document.getElementById('FactorQuadraticsOneRootMedium-question').innerHTML = questionText;
+    document.getElementById('FactorQuadraticsOneRootMedium-result').textContent = '';
+    document.getElementById('FactorQuadraticsOneRootMedium-answer').value = '';
+    document.getElementById('FactorQuadraticsOneRootMedium-next-question').style.display = 'none';
+}
+
+function checkFactorQuadraticsOneRootMediumAnswer() {
+    const userAnswer = parseFloat(document.getElementById('FactorQuadraticsOneRootMedium-answer').value);
+    const resultText = userAnswer === window.currentAnswer ? 'Correct!' : `Nope, answer is ${window.currentAnswer}.`;
+    document.getElementById('FactorQuadraticsOneRootMedium-result').textContent = resultText;
+    document.getElementById('FactorQuadraticsOneRootMedium-next-question').style.display = 'inline';
+}
+
+function startFactorQuadratics2Roots() {
+    document.getElementById('algebra-select-screen').style.display = 'none';
+    document.getElementById('FactorQuadratics2Roots-screen').style.display = 'block';
+    document.getElementById('explanation-box').innerHTML = 'Enter the 2 values of x that solve the equation, separated by a comma. <br> <br> The quadratic formula is not needed here; just factor.';
+    generateFactorQuadratics2RootsQuestion();
+}
+
+function generateFactorQuadratics2RootsQuestion() {
+    let x1, x2, questionText;
+    
+    do {
+        x1 = getRandomDigitPosorNeg(); 
+        x2 = getRandomDigitPosorNeg();
+        if (x2 === x1) x2 = -x1;
+
+        window.currentAnswer = [-(x1), -(x2)];
+
+        const a = 1;
+        const aText = a === 1 ? '' : a;
+
+        const x1x2Sum = x1 + x2;
+        const x1x2Product = x1 * x2;
+
+        questionText = `${aText}x<sup>2</sup>`;
+        if (x1x2Sum !== 0) {
+            questionText += ` ${x1x2Sum > 0 ? '+ ' : '- '}${Math.abs(x1x2Sum)}x`;
+        }
+        questionText += ` ${x1x2Product > 0 ? '+ ' : '- '}${Math.abs(x1x2Product)} = 0`;
+    } while (questionText === lastFactorQuadratics2RootsQuestion);
+
+    lastFactorQuadratics2RootsQuestion = questionText;
+
+    document.getElementById('FactorQuadratics2Roots-question').innerHTML = questionText;
+    document.getElementById('FactorQuadratics2Roots-result').textContent = '';
+    document.getElementById('FactorQuadratics2Roots-answer').value = '';
+    document.getElementById('FactorQuadratics2Roots-next-question').style.display = 'none';
+}
+
+function checkFactorQuadratics2RootsAnswer() {
+    const userAnswer = document.getElementById('FactorQuadratics2Roots-answer').value
                         .split(',')
                         .map(num => parseFloat(num.trim()));
 
@@ -261,17 +314,15 @@ function checkFactoringQuadratics2RootsAnswer() {
     
     const isCorrect = (userAnswer.includes(correctAnswer1) && userAnswer.includes(correctAnswer2)) && userAnswer.length === 2;
 
-    const resultText = isCorrect ? 'Correct!' : 'Incorrect, try again.';
-    document.getElementById('FactoringQuadratics2Roots-result').textContent = resultText;
-    
-    if (isCorrect) {
-        document.getElementById('FactoringQuadratics2Roots-next-question').style.display = 'inline';
-    }
+    const resultText = isCorrect ? 'Correct!' : `Nope, answer is ${window.currentAnswer.join(', ')}.`;
+    document.getElementById('FactorQuadratics2Roots-result').textContent = resultText;
+    document.getElementById('FactorQuadratics2Roots-next-question').style.display = 'inline';
 }
 
 function startCompleteTheSquare() {
     document.getElementById('algebra-select-screen').style.display = 'none';
     document.getElementById('CompleteTheSquare-screen').style.display = 'block';
+    document.getElementById('explanation-box').textContent = 'Your answer should be in the form (x+_)² + _';
     generateCompleteTheSquareQuestion();
 }
 
@@ -312,92 +363,346 @@ function generateCompleteTheSquareQuestion() {
     document.getElementById('CompleteTheSquare-next-question').style.display = 'none';
 }
 
-
 function formatExponent() {
     const input = document.getElementById('CompleteTheSquare-answer');
     input.value = input.value.replace(/\^2/g, '²');
+}
+
+function formatSquareRoot() {
+    const input = document.getElementById('UnitCircleQuiz-answer');
+    input.value = input.value.replace(/sqrt/g, '√');
 }
 
 function checkCompleteTheSquareAnswer() {
     const input = document.getElementById('CompleteTheSquare-answer');
     let userAnswer = input.value.trim();
 
-    // Convert superscript ² back to ^2 for comparison and remove spaces
     const standardizedAnswer = userAnswer.replace(/²/g, '^2').replace(/\s+/g, '');
     const correctAnswer = window.currentAnswer.replace(/\s+/g, '');
 
-    const resultText = standardizedAnswer === correctAnswer ? 'Correct!' : 'Incorrect, try again.';
+    const resultText = standardizedAnswer === correctAnswer ? 'Correct!' : `Nope, answer is ${window.currentAnswer}.`;
     document.getElementById('CompleteTheSquare-result').textContent = resultText;
+    document.getElementById('CompleteTheSquare-next-question').style.display = 'inline';
+}
 
-    if (standardizedAnswer === correctAnswer) {
-        document.getElementById('CompleteTheSquare-next-question').style.display = 'inline';
+function startDegreesRadians() {
+    document.getElementById('trigonometry-select-screen').style.display = 'none';
+    document.getElementById('DegreesRadiansMedium-screen').style.display = 'none';
+    document.getElementById('DegreesRadiansHard-screen').style.display = 'none';
+    document.getElementById('DegreesRadians-screen').style.display = 'block';
+    document.getElementById('explanation-box').innerHTML = "Just degrees to radians<br><br>Type pi to type π";
+    document.getElementById('DegreesRadians-answer').oninput = formatPiSymbol; // Corrected to attach only formatPiSymbol
+    document.getElementById('difficulty-button').style.display = 'block';
+    selectDifficulty('easy');
+    generateDegreesRadiansQuestion();
+}
+
+function formatPiSymbol(event) {
+    const input = event.target; // Get the input element that triggered the event
+    const cursorPosition = input.selectionStart; // Remember cursor position
+    const valueBefore = input.value;
+
+    // Only replace "pi" with "π" if it follows a valid numeric input or appears as "pi" on its own
+    input.value = input.value.replace(/(\d*)pi/g, '$1π'); 
+
+    // Restore the cursor position after replacing
+    const newLength = input.value.length;
+    const lengthDifference = newLength - valueBefore.length;
+    input.selectionStart = cursorPosition + lengthDifference;
+    input.selectionEnd = cursorPosition + lengthDifference;
+}
+
+function generateDegreesRadiansQuestion() {
+    // Define the main degrees values and their corresponding radians
+    const degreesToRadians = {
+        '30': 'π/6',
+        '45': 'π/4',
+        '60': 'π/3',
+        '90': 'π/2',
+        '120': '2π/3',
+        '135': '3π/4',
+        '150': '5π/6',
+        '180': 'π',
+        '210': '7π/6',
+        '225': '5π/4',
+        '240': '4π/3',
+        '270': '3π/2',
+        '300': '5π/3',
+        '315': '7π/4',
+        '330': '11π/6',
+        '360': '2π'
+    };
+
+    // Get a random degree value
+    const degreeValues = Object.keys(degreesToRadians);
+    let randomDegree;
+
+    do {
+        randomDegree = degreeValues[Math.floor(Math.random() * degreeValues.length)];
+    } while (randomDegree === lastDegreesRadiansQuestion); // Ensure the new question is different from the last one
+
+    // Update the last question
+    lastDegreesRadiansQuestion = randomDegree;
+
+    // Set the question text and the correct answer
+    const questionText = `How many radians is ${randomDegree} degrees?`;
+    window.currentAnswer = degreesToRadians[randomDegree];
+
+    // Update the UI elements
+    document.getElementById('DegreesRadians-question').textContent = questionText;
+    document.getElementById('DegreesRadians-result').textContent = '';
+    document.getElementById('DegreesRadians-answer').value = '';
+    document.getElementById('DegreesRadians-next-question').style.display = 'none';
+}
+
+function checkDegreesRadiansAnswer() {
+    const userAnswer = document.getElementById('DegreesRadians-answer').value.trim().toLowerCase();
+    const correctAnswer = window.currentAnswer.toLowerCase();
+
+    // Convert both answers to comparable formats
+    const standardizedUserAnswer = userAnswer.replace(/\s+/g, '').replace('π', 'pi');
+    const standardizedCorrectAnswer = correctAnswer.replace('π', 'pi');
+
+    // Use math.js or a custom fraction evaluator to simplify and compare answers
+    const isCorrect = standardizedUserAnswer === standardizedCorrectAnswer || evaluateEquivalentFractions(standardizedUserAnswer, standardizedCorrectAnswer);
+
+    const resultText = isCorrect ? 'Correct!' : `Nope, the answer is ${window.currentAnswer}.`;
+
+    document.getElementById('DegreesRadians-result').textContent = resultText;
+    document.getElementById('DegreesRadians-next-question').style.display = 'inline';
+}
+
+// Function to evaluate equivalent fractions
+function evaluateEquivalentFractions(userAnswer, correctAnswer) {
+    // Check if userAnswer and correctAnswer are fractions and normalize them for comparison
+    if (userAnswer.includes('/') && correctAnswer.includes('/')) {
+        const [userNumerator, userDenominator] = userAnswer.split('/').map(f => parseFloat(f));
+        const [correctNumerator, correctDenominator] = correctAnswer.split('/').map(f => parseFloat(f));
+        
+        // Return true if both fractions are equal when cross-multiplied
+        return userNumerator * correctDenominator === correctNumerator * userDenominator;
     }
+    return false;
+}
+
+function startDegreesRadiansMedium() {
+    document.getElementById('DegreesRadians-screen').style.display = 'none';
+    document.getElementById('DegreesRadiansMedium-screen').style.display = 'block';
+    document.getElementById('DegreesRadiansHard-screen').style.display = 'none';
+    document.getElementById('explanation-box').innerHTML = "Degrees to radians <br>AND radians to degrees<br><br>Type pi to type π";
+    document.getElementById('DegreesRadiansMedium-answer').oninput = formatPiSymbol; 
+    selectDifficulty('medium'); // Highlight medium button
+    generateDegreesRadiansMediumQuestion(); // Generate a question for medium difficulty
+}
+
+let isDegreesToRadiansMediumNext = false; // Start with radians for medium questions
+
+function generateDegreesRadiansMediumQuestion() {
+    // Define degrees and their corresponding radians at 30-degree increments
+    const degreesToRadians = {
+        '30': 'π/6',
+        '60': 'π/3',
+        '90': 'π/2',
+        '120': '2π/3',
+        '150': '5π/6',
+        '180': 'π',
+        '210': '7π/6',
+        '240': '4π/3',
+        '270': '3π/2',
+        '300': '5π/3',
+        '330': '11π/6',
+        '360': '2π'
+    };
+
+    // Get all degree values
+    const degreeValues = Object.keys(degreesToRadians);
+    let randomDegree;
+
+    do {
+        // Randomly select a degree value
+        randomDegree = degreeValues[Math.floor(Math.random() * degreeValues.length)];
+    } while (randomDegree === lastDegreesRadiansQuestion); // Ensure the new question is different from the last one
+
+    // Update the last question
+    lastDegreesRadiansQuestion = randomDegree;
+
+    // Set question and answer based on the alternating question type
+    let questionText;
+    if (isDegreesToRadiansMediumNext) {
+        questionText = `How many radians is ${randomDegree} degrees?`;
+        window.currentAnswer = degreesToRadians[randomDegree];
+    } else {
+        // Find the corresponding degree for a given radian
+        const radiansToDegrees = Object.fromEntries(Object.entries(degreesToRadians).map(([deg, rad]) => [rad, deg]));
+        const randomRadian = degreesToRadians[randomDegree];
+        questionText = `How many degrees is ${randomRadian} radians?`;
+        window.currentAnswer = radiansToDegrees[randomRadian];
+    }
+
+    // Toggle for next question type
+    isDegreesToRadiansMediumNext = !isDegreesToRadiansMediumNext;
+
+    // Update the UI elements for the medium screen
+    document.getElementById('DegreesRadiansMedium-question').textContent = questionText;
+    document.getElementById('DegreesRadiansMedium-result').textContent = '';
+    document.getElementById('DegreesRadiansMedium-answer').value = '';
+    document.getElementById('DegreesRadiansMedium-next-question').style.display = 'none';
+}
+
+function checkDegreesRadiansMediumAnswer() {
+    const userAnswer = document.getElementById('DegreesRadiansMedium-answer').value.trim().toLowerCase();
+    const correctAnswer = window.currentAnswer.toLowerCase();
+
+    // Convert both answers to comparable formats
+    const standardizedUserAnswer = userAnswer.replace(/\s+/g, '').replace('π', 'pi'); // Ensure π is converted back to 'pi'
+    const standardizedCorrectAnswer = correctAnswer.replace('π', 'pi');
+
+    // Check if the user's answer is correct in various formats
+    const isCorrect =
+        standardizedUserAnswer === standardizedCorrectAnswer ||
+        evaluateEquivalentFractions(standardizedUserAnswer, standardizedCorrectAnswer) ||
+        comparePiExpressions(standardizedUserAnswer, standardizedCorrectAnswer);
+
+    const resultText = isCorrect ? 'Correct!' : `Nope, the answer is ${window.currentAnswer}.`;
+
+    document.getElementById('DegreesRadiansMedium-result').textContent = resultText;
+    document.getElementById('DegreesRadiansMedium-next-question').style.display = 'inline';
+}
+
+function startDegreesRadiansHard() {
+    document.getElementById('DegreesRadians-screen').style.display = 'none';
+    document.getElementById('DegreesRadiansMedium-screen').style.display = 'none';
+    document.getElementById('DegreesRadiansHard-screen').style.display = 'block';
+    document.getElementById('difficulty-button').style.display = 'block'; // Show difficulty
+    document.getElementById('explanation-box').innerHTML = "Round to 2 decimal points";
+    selectDifficulty('hard');
+    generateDegreesRadiansHardQuestion(); // Start generating the hard questions
+}
+
+let isDegreesToRadiansHardNext = true; // Start with degrees to radians for hard questions
+
+function generateDegreesRadiansHardQuestion() {
+    let questionText, randomValue;
+
+    do {
+        if (isDegreesToRadiansHardNext) {
+            // Generate a random degree value between 0.1 and 720
+            randomValue = (Math.random() * (720 - 0.1) + 0.1).toFixed(1);
+            questionText = `How many radians is ${randomValue} degrees?`;
+            window.currentAnswer = parseFloat((parseFloat(randomValue) * (Math.PI / 180)).toFixed(2)); // Convert and keep only 2 decimal points
+        } else {
+            // Generate a random radian value between 0.1 and 4π, in increments of 0.1
+            const maxRadians = 4 * Math.PI; // Maximum value of 4π
+            randomValue = (Math.random() * (maxRadians - 0.1) + 0.1);
+            randomValue = (Math.round(randomValue * 10) / 10).toFixed(1); // Round to nearest increment of 0.1
+            questionText = `How many degrees is ${randomValue} radians?`;
+            window.currentAnswer = parseFloat((parseFloat(randomValue) * (180 / Math.PI)).toFixed(2)); // Convert and keep only 2 decimal points
+        }
+    } while (questionText === lastDegreesRadiansQuestion); // Ensure the new question is different from the last one
+
+    // Toggle for next question type
+    isDegreesToRadiansHardNext = !isDegreesToRadiansHardNext;
+
+    lastDegreesRadiansQuestion = randomValue; // Store last question
+
+    document.getElementById('DegreesRadiansHard-question').textContent = questionText;
+    document.getElementById('DegreesRadiansHard-result').textContent = '';
+    document.getElementById('DegreesRadiansHard-answer').value = '';
+    document.getElementById('DegreesRadiansHard-next-question').style.display = 'none';
+}
+
+function checkDegreesRadiansHardAnswer() {
+    const userAnswer = parseFloat(document.getElementById('DegreesRadiansHard-answer').value.trim());
+    const correctAnswer = parseFloat(window.currentAnswer.toFixed(2)); // Keep only 2 decimal points
+
+    // Allow a small margin of error due to floating-point precision issues
+    const isCorrect = Math.abs(userAnswer - correctAnswer) < 0.01; // Acceptable margin of 0.01
+
+    const resultText = isCorrect ? 'Correct!' : `Nope, the answer is ${correctAnswer}.`;
+    document.getElementById('DegreesRadiansHard-result').textContent = resultText;
+    document.getElementById('DegreesRadiansHard-next-question').style.display = 'inline';
+}
+
+// New function to compare pi expressions
+function comparePiExpressions(userAnswer, correctAnswer) {
+    // Convert π expressions to numerical approximations
+    const pi = Math.PI;
+    const userExpression = userAnswer.replace('pi', pi);
+    const correctExpression = correctAnswer.replace('pi', pi);
+
+    // Evaluate if the numerical values are close enough
+    return Math.abs(eval(userExpression) - eval(correctExpression)) < 0.01;
 }
 
 function startUnitCircleQuiz() {
     document.getElementById('trigonometry-select-screen').style.display = 'none';
     document.getElementById('UnitCircleQuiz-screen').style.display = 'block';
+    document.getElementById('explanation-box').innerHTML = "Your answer should either be a whole number or a fraction. <br> <br> Type sqrt to type √.";
+    document.getElementById('UnitCircleQuiz-answer').oninput = formatSquareRoot;
     generateUnitCircleQuizQuestion();
 }
 
 function generateUnitCircleQuizQuestion() {
-    const angles = ['0', 'π/6', 'π/4', 'π/3', 'π/2', '2π/3', '3π/4', '5π/6', 'π', '7π/6', '5π/4', '4π/3', '3π/2', '5π/3', '7π/4', '11π/6'];
-    const trigFunctions = ['cos', 'sin'];
+    let questionText;
+    
+    do {
+        const angles = ['0', 'π/6', 'π/4', 'π/3', 'π/2', '2π/3', '3π/4', '5π/6', 'π', '7π/6', '5π/4', '4π/3', '3π/2', '5π/3', '7π/4', '11π/6'];
+        const trigFunctions = ['cos', 'sin'];
 
-    const randomAngle = angles[Math.floor(Math.random() * angles.length)];
-    const randomTrigFunction = trigFunctions[Math.floor(Math.random() * trigFunctions.length)];
+        const randomAngle = angles[Math.floor(Math.random() * angles.length)];
+        const randomTrigFunction = trigFunctions[Math.floor(Math.random() * trigFunctions.length)];
 
-    let answerText = '';
+        questionText = `What is ${randomTrigFunction}(${randomAngle})?`;
 
-    // Calculate the correct answer based on the selected angle and trigonometric function
-    switch (randomTrigFunction) {
-        case 'sin':
-            switch (randomAngle) {
-                case '0': answerText = '0'; break;
-                case 'π/6': answerText = '1/2'; break;
-                case 'π/4': answerText = '√2/2'; break;
-                case 'π/3': answerText = '√3/2'; break;
-                case 'π/2': answerText = '1'; break;
-                case '2π/3': answerText = '√3/2'; break;
-                case '3π/4': answerText = '√2/2'; break;
-                case '5π/6': answerText = '1/2'; break;
-                case 'π': answerText = '0'; break;
-                case '7π/6': answerText = '-1/2'; break;
-                case '5π/4': answerText = '-√2/2'; break;
-                case '4π/3': answerText = '-√3/2'; break;
-                case '3π/2': answerText = '-1'; break;
-                case '5π/3': answerText = '-√3/2'; break;
-                case '7π/4': answerText = '-√2/2'; break;
-                case '11π/6': answerText = '-1/2'; break;
-                default: answerText = ''; break;
-            }
-            break;
-        case 'cos':
-            switch (randomAngle) {
-                case '0': answerText = '1'; break;
-                case 'π/6': answerText = '√3/2'; break;
-                case 'π/4': answerText = '√2/2'; break;
-                case 'π/3': answerText = '1/2'; break;
-                case 'π/2': answerText = '0'; break;
-                case '2π/3': answerText = '-1/2'; break;
-                case '3π/4': answerText = '-√2/2'; break;
-                case '5π/6': answerText = '-√3/2'; break;
-                case 'π': answerText = '-1'; break;
-                case '7π/6': answerText = '-√3/2'; break;
-                case '5π/4': answerText = '-√2/2'; break;
-                case '4π/3': answerText = '-1/2'; break;
-                case '3π/2': answerText = '0'; break;
-                case '5π/3': answerText = '1/2'; break;
-                case '7π/4': answerText = '√2/2'; break;
-                case '11π/6': answerText = '√3/2'; break;
-                default: answerText = ''; break;
-            }
-            break;
-    }
+        // Calculate the correct answer based on the angle and trig function
+        let correctAnswer;
+        if (randomTrigFunction === 'cos') {
+            const cosValues = {
+                '0': '1',
+                'π/6': '√3/2',
+                'π/4': '√2/2',
+                'π/3': '1/2',
+                'π/2': '0',
+                '2π/3': '-1/2',
+                '3π/4': '-√2/2',
+                '5π/6': '-√3/2',
+                'π': '-1',
+                '7π/6': '-√3/2',
+                '5π/4': '-√2/2',
+                '4π/3': '-1/2',
+                '3π/2': '0',
+                '5π/3': '1/2',
+                '7π/4': '√2/2',
+                '11π/6': '√3/2'
+            };
+            correctAnswer = cosValues[randomAngle];
+        } else if (randomTrigFunction === 'sin') {
+            const sinValues = {
+                '0': '0',
+                'π/6': '1/2',
+                'π/4': '√2/2',
+                'π/3': '√3/2',
+                'π/2': '1',
+                '2π/3': '√3/2',
+                '3π/4': '√2/2',
+                '5π/6': '1/2',
+                'π': '0',
+                '7π/6': '-1/2',
+                '5π/4': '-√2/2',
+                '4π/3': '-√3/2',
+                '3π/2': '-1',
+                '5π/3': '-√3/2',
+                '7π/4': '-√2/2',
+                '11π/6': '-1/2'
+            };
+            correctAnswer = sinValues[randomAngle];
+        }
 
-    window.currentAnswer = answerText;
+        window.currentAnswer = correctAnswer;
 
-    const questionText = `What is ${randomTrigFunction}(${randomAngle})?`;
+    } while (questionText === lastUnitCircleQuizQuestion);
+
+    lastUnitCircleQuizQuestion = questionText;
 
     document.getElementById('UnitCircleQuiz-question').innerHTML = questionText;
     document.getElementById('UnitCircleQuiz-result').textContent = '';
@@ -408,40 +713,36 @@ function generateUnitCircleQuizQuestion() {
 function checkUnitCircleQuizAnswer() {
     const userAnswer = document.getElementById('UnitCircleQuiz-answer').value.trim();
 
-    const resultText = userAnswer === window.currentAnswer ? 'Correct!' : 'Incorrect, try again.';
+    const resultText = userAnswer === window.currentAnswer ? 'Correct!' : `Nope, answer is ${window.currentAnswer}.`;
     document.getElementById('UnitCircleQuiz-result').textContent = resultText;
-
-    if (userAnswer === window.currentAnswer) {
-        document.getElementById('UnitCircleQuiz-next-question').style.display = 'inline';
-    }
+    document.getElementById('UnitCircleQuiz-next-question').style.display = 'inline';
 }
 
 function startDoubleAngleIdentitiesEasy() {
     document.getElementById('DoubleAngleIdentitiesMedium-screen').style.display = 'none'; // Hide the medium screen
     document.getElementById('trigonometry-select-screen').style.display = 'none'; // Hide the medium screen
     document.getElementById('DoubleAngleIdentitiesEasy-screen').style.display = 'block';
-    document.getElementById('DoubleAngleIdentitiesEasy-difficulty').style.display = 'block';
+    document.getElementById('difficulty-button').style.display = 'block';
+    document.getElementById('explanation-box').innerHTML = "Enter a double angle identity.";
     selectDifficulty('easy');
     generateDoubleAngleIdentitiesEasyQuestion();
 }
 
+let easyQuestionIndex = 0; // Initialize index to track the current question
 
 function generateDoubleAngleIdentitiesEasyQuestion() {
-    // Array of question and answer pairs for double angle identities
     const identities = [
         { question: "2sinxcosx = ?", answer: "sin2x" },
-        { question: "cos<sup>2</sup>x - sin<sup>2</sup>x = ?", answer: "cos2x" },
-        { question: "2cos<sup>2</sup>x - 1 = ?", answer: "cos2x" },
-        { question: "1 - 2sin<sup>2</sup>x = ?", answer: "cos2x" },
-        { question: "<div style='display: inline-block;'><div style='text-align: center;'>2tanx</div><hr style='margin: 0;'><div style='text-align: center;'>1 - tan<sup>2</sup>x</div></div> = ?", answer: "tan2x" }
+        { question: "cos²x - sin²x = ?", answer: "cos2x" },
+        { question: "2cos²x - 1 = ?", answer: "cos2x" },
+        { question: "1 - 2sin²x = ?", answer: "cos2x" },
+        { question: "<div style='display: inline-block;'><div style='text-align: center;'>2tanx</div><hr style='margin: 0;'><div style='text-align: center;'>1 - tan²x</div></div> = ?", answer: "tan2x" }
     ];
 
-    // Randomly select one identity
-    const randomIndex = Math.floor(Math.random() * identities.length);
-    const selectedIdentity = identities[randomIndex];
+    const selectedIdentity = identities[easyQuestionIndex];
+    easyQuestionIndex = (easyQuestionIndex + 1) % identities.length; // Move to the next question in the sequence
 
-    // Set the question and correct answer
-    window.currentAnswer = selectedIdentity.answer;
+    window.currentAnswer = selectedIdentity.answer.replace(/\s+/g, '').replace(/\((.*?)\)/g, '$1');
 
     document.getElementById('DoubleAngleIdentitiesEasy-question').innerHTML = selectedIdentity.question;
     document.getElementById('DoubleAngleIdentitiesEasy-result').textContent = '';
@@ -452,41 +753,41 @@ function generateDoubleAngleIdentitiesEasyQuestion() {
 function checkDoubleAngleIdentitiesEasyAnswer() {
     let userAnswer = document.getElementById('DoubleAngleIdentitiesEasy-answer').value.trim();
 
-    // Normalize user answer to accept both sin(x) and sinx as valid
-    userAnswer = userAnswer.replace(/\s+/g, ''); // Remove spaces
-    userAnswer = userAnswer.replace(/\((.*?)\)/g, '$1'); // Remove parentheses around the argument
+    userAnswer = userAnswer.replace(/\s+/g, '');
+    userAnswer = userAnswer.replace(/\((.*?)\)/g, '$1');
 
-    // Normalize correct answer similarly
     let correctAnswer = window.currentAnswer.replace(/\s+/g, '').replace(/\((.*?)\)/g, '$1');
 
-    const resultText = userAnswer === correctAnswer ? 'Correct!' : 'Incorrect, try again.';
+    const resultText = userAnswer === correctAnswer ? 'Correct!' : `Nope, answer is ${window.currentAnswer}.`;
     document.getElementById('DoubleAngleIdentitiesEasy-result').textContent = resultText;
-
-    if (userAnswer === correctAnswer) {
-        document.getElementById('DoubleAngleIdentitiesEasy-next-question').style.display = 'inline';
-    }
+    document.getElementById('DoubleAngleIdentitiesEasy-next-question').style.display = 'inline';
 }
 
 function startDoubleAngleIdentitiesMedium() {
     document.getElementById('DoubleAngleIdentitiesEasy-screen').style.display = 'none';
     document.getElementById('DoubleAngleIdentitiesMedium-screen').style.display = 'block';
-    document.getElementById('DoubleAngleIdentitiesEasy-difficulty').style.display = 'block'; // Show difficulty buttons
+    document.getElementById('difficulty-button').style.display = 'block'; // Show difficulty buttons
+    selectDifficulty('medium');
     generateDoubleAngleIdentitiesMediumQuestion();
 }
+
+let mediumQuestionIndex = 0; // Initialize index to track the current question
 
 function generateDoubleAngleIdentitiesMediumQuestion() {
     const identities = [
         { question: "sin2x = ?", answer: "2sin(x)cos(x)" },
-        { question: "cos2x (1) = ?", answer: "cos^2(x) - sin^2(x)" },
-        { question: "cos2x (2) = ?", answer: "2cos^2(x) - 1" },
-        { question: "cos2x (3) = ?", answer: "1 - 2sin^2(x)" },
+        { question: "cos2x = ?", answers: ["cos^2(x) - sin^2(x)", "2cos^2(x) - 1", "1 - 2sin^2(x)"] },
         { question: "tan2x = ?", answer: "2tan(x) / (1 - tan^2(x))" }
     ];
 
-    const randomIndex = Math.floor(Math.random() * identities.length);
-    const selectedIdentity = identities[randomIndex];
+    const selectedIdentity = identities[mediumQuestionIndex];
+    mediumQuestionIndex = (mediumQuestionIndex + 1) % identities.length; // Move to the next question in the sequence
 
-    window.currentAnswer = selectedIdentity.answer;
+    if (selectedIdentity.answers) {
+        window.currentAnswers = selectedIdentity.answers.map(ans => ans.replace(/\s+/g, '').replace(/²/g, '^2').replace(/\((.*?)\)/g, '$1'));
+    } else {
+        window.currentAnswers = [selectedIdentity.answer.replace(/\s+/g, '').replace(/²/g, '^2').replace(/\((.*?)\)/g, '$1')];
+    }
 
     document.getElementById('DoubleAngleIdentitiesMedium-question').innerHTML = selectedIdentity.question;
     document.getElementById('DoubleAngleIdentitiesMedium-result').textContent = '';
@@ -494,23 +795,43 @@ function generateDoubleAngleIdentitiesMediumQuestion() {
     document.getElementById('DoubleAngleIdentitiesMedium-next-question').style.display = 'none';
 }
 
+function formatExponentMedium() {
+    const input = document.getElementById('DoubleAngleIdentitiesMedium-answer');
+    input.value = input.value.replace(/\^2/g, '²');
+}
 
 function checkDoubleAngleIdentitiesMediumAnswer() {
-    let userAnswer = document.getElementById('DoubleAngleIdentitiesMedium-answer').value.trim();
-
-    // Normalize user answer to accept both sin(x) and sinx as valid
-    userAnswer = userAnswer.replace(/\s+/g, ''); // Remove spaces
-    userAnswer = userAnswer.replace(/\((.*?)\)/g, '$1'); // Remove parentheses around the argument
-
-    // Normalize correct answer similarly
-    let correctAnswer = window.currentAnswer.replace(/\s+/g, '').replace(/\((.*?)\)/g, '$1');
-
-    const resultText = userAnswer === correctAnswer ? 'Correct!' : 'Incorrect, try again.';
-    document.getElementById('DoubleAngleIdentitiesMedium-result').textContent = resultText;
-
-    if (userAnswer === correctAnswer) {
-        document.getElementById('DoubleAngleIdentitiesMedium-next-question').style.display = 'inline';
+    function normalizeAnswer(answer) {
+        return answer
+            .replace(/\s+/g, '')
+            .replace(/²/g, '^2')
+            .replace(/\((.*?)\)/g, '$1')
+            .replace(/(\d)\(/g, '$1*(')
+            .replace(/\^2/g, '²')
+            .replace(/\/+/g, '/')
+            .replace(/([\+\-\*\/])\1+/g, '$1')
+            .toLowerCase();
     }
+
+    const userAnswer = normalizeAnswer(document.getElementById('DoubleAngleIdentitiesMedium-answer').value.trim());
+    const correctAnswers = window.currentAnswers.map(answer => normalizeAnswer(answer));
+
+    const isCorrect = correctAnswers.some(correctAnswer => correctAnswer === userAnswer);
+
+    const resultText = isCorrect ? 'Correct!' : `Nope, answer is ${window.currentAnswers[0]}.`;
+    document.getElementById('DoubleAngleIdentitiesMedium-result').textContent = resultText;
+    document.getElementById('DoubleAngleIdentitiesMedium-next-question').style.display = 'inline';
+}
+
+function startDoubleAngleIdentitiesHard() {
+    document.getElementById('DoubleAngleIdentitiesEasy-screen').style.display = 'none';
+    document.getElementById('DoubleAngleIdentitiesMedium-screen').style.display = 'block';
+    document.getElementById('difficulty-button').style.display = 'block'; // Show difficulty buttons
+    generateDoubleAngleIdentitiesHardQuestion();
+}
+
+function generateDoubleAngleIdentitiesHardQuestion() {
+   
 }
 
 // Back button section!
@@ -532,48 +853,75 @@ function TrigonometrySelectBackToHome() {
 function ArithmeticBackToArithmeticSelect() {
     document.getElementById('arithmetic-screen').style.display = 'none';
     document.getElementById('arithmetic-select-screen').style.display = 'block';
+    document.getElementById('explanation-box').innerHTML = "Welcome to Math Practice!<br><br> Choose the type of problem you'd like to improve on.";
 }
 
 function BasicAlgebraBackToAlgebraSelect() {
     document.getElementById('basic-algebra-screen').style.display = 'none';
     document.getElementById('algebra-select-screen').style.display = 'block';
+    document.getElementById('explanation-box').innerHTML = "Welcome to Math Practice!<br><br> Choose the type of problem you'd like to improve on.";
 }
 
-function FactoringQuadraticsOneRootBackToAlgebraSelect() {
-    document.getElementById('FactoringQuadraticsOneRoot-screen').style.display = 'none';
+function FactorQuadraticsOneRootEasyBackToAlgebraSelect() {
+    document.getElementById('FactorQuadraticsOneRootEasy-screen').style.display = 'none';
     document.getElementById('algebra-select-screen').style.display = 'block';
+    document.getElementById('explanation-box').innerHTML = "Welcome to Math Practice!<br><br> Choose the type of problem you'd like to improve on.";
 }
 
-function FactoringQuadratics2RootsBackToAlgebraSelect() {
-    document.getElementById('FactoringQuadratics2Roots-screen').style.display = 'none';
+function FactorQuadraticsOneRootMediumBackToAlgebraSelect() {
+    document.getElementById('FactorQuadraticsOneRootMedium-screen').style.display = 'none';
     document.getElementById('algebra-select-screen').style.display = 'block';
+    document.getElementById('explanation-box').innerHTML = "Welcome to Math Practice!<br><br> Choose the type of problem you'd like to improve on.";
+}
+
+function FactorQuadratics2RootsBackToAlgebraSelect() {
+    document.getElementById('FactorQuadratics2Roots-screen').style.display = 'none';
+    document.getElementById('algebra-select-screen').style.display = 'block';
+    document.getElementById('explanation-box').innerHTML = "Welcome to Math Practice!<br><br> Choose the type of problem you'd like to improve on.";
 }
 
 function CompleteTheSquareBackToAlgebraSelect() {
     document.getElementById('CompleteTheSquare-screen').style.display = 'none';
     document.getElementById('algebra-select-screen').style.display = 'block';
+    document.getElementById('explanation-box').innerHTML = "Welcome to Math Practice!<br><br> Choose the type of problem you'd like to improve on.";
+}
+
+function DegreesRadiansBackToTrigonometrySelect() {
+    document.getElementById('DegreesRadians-screen').style.display = 'none';
+    document.getElementById('trigonometry-select-screen').style.display = 'block';
+    document.getElementById('explanation-box').innerHTML = "Welcome to Math Practice!<br><br> Choose the type of problem you'd like to improve on.";
+}
+
+function DegreesRadiansMediumBackToTrigonometrySelect() {
+    document.getElementById('DegreesRadiansMedium-screen').style.display = 'none';
+    document.getElementById('trigonometry-select-screen').style.display = 'block';
+    document.getElementById('explanation-box').innerHTML = "Welcome to Math Practice!<br><br> Choose the type of problem you'd like to improve on.";
+}
+
+function DegreesRadiansHardBackToTrigonometrySelect() {
+    document.getElementById('DegreesRadiansHard-screen').style.display = 'none';
+    document.getElementById('trigonometry-select-screen').style.display = 'block';
+    document.getElementById('explanation-box').innerHTML = "Welcome to Math Practice!<br><br> Choose the type of problem you'd like to improve on.";
 }
 
 function UnitCircleQuizBackToTrigonometrySelect() {
     document.getElementById('UnitCircleQuiz-screen').style.display = 'none';
     document.getElementById('trigonometry-select-screen').style.display = 'block';
+    document.getElementById('explanation-box').innerHTML = "Welcome to Math Practice!<br><br> Choose the type of problem you'd like to improve on.";
 }
 
 function DoubleAngleIdentitiesEasyBackToTrigonometrySelect() {
     document.getElementById('DoubleAngleIdentitiesEasy-screen').style.display = 'none';
-    document.getElementById('DoubleAngleIdentitiesEasy-difficulty').style.display = 'none';
     document.getElementById('trigonometry-select-screen').style.display = 'block';
-    selectDifficulty('easy');
+    document.getElementById('explanation-box').innerHTML = "Welcome to Math Practice!<br><br> Choose the type of problem you'd like to improve on.";
 }
 
 function DoubleAngleIdentitiesMediumBackToTrigonometrySelect() {
     document.getElementById('DoubleAngleIdentitiesMedium-screen').style.display = 'none';
-    document.getElementById('DoubleAngleIdentitiesEasy-difficulty').style.display = 'none'; // Hide the difficulty buttons
     document.getElementById('trigonometry-select-screen').style.display = 'block';
-    selectDifficulty('easy');
+    document.getElementById('explanation-box').innerHTML = "Welcome to Math Practice!<br><br> Choose the type of problem you'd like to improve on.";
 }
 
-// difficulty buttons
 function selectDifficulty(difficulty) {
     document.getElementById('easy-button').classList.remove('button-selected');
     document.getElementById('medium-button').classList.remove('button-selected');
@@ -585,7 +933,16 @@ function selectDifficulty(difficulty) {
         document.getElementById('medium-button').classList.add('button-selected');
     } else if (difficulty === 'hard') {
         document.getElementById('hard-button').classList.add('button-selected');
-        // Implement the logic for starting hard questions here
     }
 }
 
+function selectDifficultyUpToMedium(difficulty) {
+    document.getElementById('easy-button').classList.remove('button-selected');
+    document.getElementById('medium-button').classList.remove('button-selected');
+    
+    if (difficulty === 'easy') {
+        document.getElementById('easy-button').classList.add('button-selected');
+    } else {
+        document.getElementById('medium-button').classList.add('button-selected');
+    }
+}
