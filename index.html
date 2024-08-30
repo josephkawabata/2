@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="explanation-box" class="explanation-box">Welcome to Math Practice! Choose the type of problem you'd like to improve on.</div>
+    <div id="explanation-box" class="explanation-box">Welcome to Math Practice! <br><br> Choose the type of problem you'd like to improve on.</div>
 
     <div id="home-screen" class="container">
         <h1>Select Topic</h1>
@@ -26,8 +26,8 @@
             <input type="checkbox" id="arithmetic-subtraction-checkbox"> Subtraction
         </label>
         <br><br>
-        <button onclick="startArithmetic()">Start</button>
-        <button onclick="ArithmeticSelectBackToHome()">Back</button> <!-- Back button -->
+        <button class="start-button" onclick="startArithmetic()">Start</button>
+        <button class="back-button" onclick="ArithmeticSelectBackToHome()">Back</button> <!-- Back button -->
     </div>
 
     <div id="algebra-select-screen" class="container" style="display:none;">
@@ -39,105 +39,214 @@
             <a href="javascript:void(0)" onclick="startCompleteTheSquare()">Complete the Square</a>
         </div>
         <div class="button-container">
-            <a href="javascript:void(0)" onclick="startFactoringQuadraticsOneRoot()">Factoring Quadratics: 1 Root</a>
+            <a href="javascript:void(0)" onclick="startFactorQuadraticsOneRootEasy()">Factor Quadratics: 1 Root</a>
         </div>
         <div class="button-container">
-            <a href="javascript:void(0)" onclick="startFactoringQuadratics2Roots()">Factoring Quadratics: 2 Roots</a>
+            <a href="javascript:void(0)" onclick="startFactorQuadratics2Roots()">Factor Quadratics: 2 Roots</a>
         </div>
-        <button onclick="AlgebraSelectBackToHome()">Back</button>
+        <button class="back-button" onclick="AlgebraSelectBackToHome()">Back</button>
     </div>
 
     <div id="trigonometry-select-screen" class="container" style="display:none;">
         <h1>Categories</h1>
+        <div class="button-container">
+            <a href="javascript:void(0)" onclick="startDegreesRadians()">Convert Degrees & Radians</a>
+        </div>
         <div class="button-container">
             <a href="javascript:void(0)" onclick="startDoubleAngleIdentitiesEasy()">Double Angle Identities</a>
         </div>
         <div class="button-container">
             <a href="javascript:void(0)" onclick="startUnitCircleQuiz()">Unit Circle Quiz</a>
         </div>
-        <button onclick="TrigonometrySelectBackToHome()">Back</button>
+        <button class="back-button" onclick="TrigonometrySelectBackToHome()">Back</button>
     </div>
 
     <div id="arithmetic-screen" class="container" style="display:none;">
         <p id="arithmetic-question" class="question-text">What is 1 + 1?</p>
-        <input type="text" id="arithmetic-answer" placeholder="Your answer" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your answer'">
-        <button onclick="checkArithmeticAnswer()">Submit</button>
+        <div class="input-button-wrapper">
+            <input type="text" id="arithmetic-answer" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder = ''">
+            <button class="submit-button" onclick="checkArithmeticAnswer()">Submit</button>
+        </div>
         <p id="arithmetic-result"></p>
-        <button id="arithmetic-next-question" style="display:none;" onclick="generateArithmeticQuestion()">Next Question</button>
-        <button onclick="ArithmeticBackToArithmeticSelect()">Back</button> <!-- Back button -->
-    </div>
+        <div class="segregate-next-question-button">
+            <button id="arithmetic-next-question" style="display:none;" onclick="generateArithmeticQuestion()">Next Question</button>
+        </div>
+        <button class="back-button" onclick="ArithmeticBackToArithmeticSelect()">Back</button>
+    </div>    
    
     <div id="basic-algebra-screen" class="container" style="display:none;">
         <h1>Solve for x:</h1>
-        <p id="question" class="question-text">What is 1 + 1?</p>
-        <input type="text" id="answer" placeholder="Your answer" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your answer'">
-        <button onclick="checkAnswer()">Submit</button>
-        <p id="result"></p>
-        <button id="next-question" style="display:none;" onclick="generateBasicAlgebraQuestion()">Next Question</button>
-        <button onclick="BasicAlgebraBackToAlgebraSelect()">Back</button> <!-- Back button -->
+        <p id="basic-algebra-question" class="question-text">What is 1 + 1?</p> <!-- Changed ID -->
+        <div class="input-button-wrapper">
+            <input type="text" id="basic-algebra-answer" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder = ''"> <!-- Changed ID -->
+            <button class="submit-button" onclick="checkBasicAlgebraAnswer()">Submit</button>
+        </div>
+        <p id="basic-algebra-result"></p> <!-- Changed ID -->
+        <div><button id="basic-algebra-next-question" style="display:none;" onclick="generateBasicAlgebraQuestion()">Next Question</button></div> <!-- Changed ID -->
+        <div><button class="back-button" onclick="BasicAlgebraBackToAlgebraSelect()">Back</button></div>
     </div>
+      
 
-    <div id="FactoringQuadraticsOneRoot-screen" class="container" style="display:none;">
-        <h1>Solve for x by factoring:</h1>
-        <p id="FactoringQuadraticsOneRoot-question" class="question-text">x<sup>2</sup> + 6x + 9 = 0</p>
-        <input type="text" id="FactoringQuadraticsOneRoot-answer" placeholder="e.g. 3" onfocus="this.placeholder = ''" onblur="this.placeholder = 'e.g. 3'">
-        <button onclick="checkFactoringQuadraticsOneRootAnswer()">Submit</button>
-        <p id="FactoringQuadraticsOneRoot-result"></p>
-        <button id="FactoringQuadraticsOneRoot-next-question" style="display:none;" onclick="generateFactoringQuadraticsOneRootQuestion()">Next Question</button>
-        <button onclick="FactoringQuadraticsOneRootBackToAlgebraSelect()">Back</button> <!-- Back button -->
-    </div> 
+    <div id="FactorQuadraticsOneRootEasy-screen" class="container" style="display:none;">
+        <h1>Solve for x by Factoring:</h1>
+        <p id="FactorQuadraticsOneRootEasy-question" class="question-text">x<sup>2</sup> + 6x + 9 = 0</p>
+        <div class="input-button-wrapper">
+            <input type="text" id="FactorQuadraticsOneRootEasy-answer" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder = ''">
+            <button class="submit-button" onclick="checkFactorQuadraticsOneRootEasyAnswer()">Submit</button>
+        </div>
+        <p id="FactorQuadraticsOneRootEasy-result"></p>
+        <div><button id="FactorQuadraticsOneRootEasy-next-question" style="display:none;" onclick="generateFactorQuadraticsOneRootEasyQuestion()">Next Question</button></div>
+        <button class="back-button" onclick="FactorQuadraticsOneRootEasyBackToAlgebraSelect()">Back</button>
     
-    <div id="FactoringQuadratics2Roots-screen" class="container" style="display:none;">
-        <h1>Solve for x by factoring:</h1>
-        <p id="FactoringQuadratics2Roots-question" class="question-text">x<sup>2</sup> + 6x + 9 = 0</p>
-        <input type="text" id="FactoringQuadratics2Roots-answer" placeholder="x1, x2" onfocus="this.placeholder = ''" onblur="this.placeholder = 'x1, x2'">
-        <button onclick="checkFactoringQuadratics2RootsAnswer()">Submit</button>
-        <p id="FactoringQuadratics2Roots-result"></p>
-        <button id="FactoringQuadratics2Roots-next-question" style="display:none;" onclick="generateFactoringQuadratics2RootsQuestion()">Next Question</button>
-        <button onclick="FactoringQuadratics2RootsBackToAlgebraSelect()">Back</button> <!-- Back button -->
-    </div> 
+        <!-- Add the Difficulty Buttons -->
+        <div id="difficulty-button" style="display: flex; justify-content: center; margin-top: 20px;">
+            <button id="easy-button" class="button-selected" onclick="selectDifficultyUpToMedium('easy'); startFactorQuadraticsOneRootEasy();">Easy</button>
+            <button id="medium-button" onclick="selectDifficultyUpToMedium('medium'); startFactorQuadraticsOneRootMedium();">Medium</button>
+        </div>
+    </div>  
+
+    <div id="FactorQuadraticsOneRootMedium-screen" class="container" style="display:none;">
+        <h1>Solve for x by Factoring:</h1>
+        <p id="FactorQuadraticsOneRootMedium-question" class="question-text">x<sup>2</sup> + 6x + 9 = 0</p>
+        <div class="input-button-wrapper">
+            <input type="text" id="FactorQuadraticsOneRootMedium-answer" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder = ''">
+            <button class="submit-button" onclick="checkFactorQuadraticsOneRootMediumAnswer()">Submit</button>
+        </div>
+        <p id="FactorQuadraticsOneRootMedium-result"></p>
+        <div><button id="FactorQuadraticsOneRootMedium-next-question" style="display:none;" onclick="generateFactorQuadraticsOneRootMediumQuestion()">Next Question</button></div>
+        <button class="back-button" onclick="FactorQuadraticsOneRootMediumBackToAlgebraSelect()">Back</button>
+        <div id="difficulty-button" style="display: flex; justify-content: center; margin-top: 20px;">
+            <button id="easy-button" onclick="selectDifficultyUpToMedium('easy'); startFactorQuadraticsOneRootEasy();">Easy</button>
+            <button id="medium-button" class="button-selected" onclick="selectDifficultyUpToMedium('medium'); startFactorQuadraticsOneRootMedium();">Medium</button>
+        </div>
+    </div>
+    
+    <div id="FactorQuadratics2Roots-screen" class="container" style="display:none;">
+        <h1>Solve for x by Factoring:</h1>
+        <p id="FactorQuadratics2Roots-question" class="question-text">x<sup>2</sup> + 6x + 9 = 0</p>
+        <div class="input-button-wrapper">
+            <input type="text" id="FactorQuadratics2Roots-answer" placeholder="x1, x2" onfocus="this.placeholder = ''" onblur="this.placeholder = 'x1, x2'">
+            <button class="submit-button" onclick="checkFactorQuadratics2RootsAnswer()">Submit</button>
+        </div>
+        <p id="FactorQuadratics2Roots-result"></p>
+        <div><button id="FactorQuadratics2Roots-next-question" style="display:none;" onclick="generateFactorQuadratics2RootsQuestion()">Next Question</button></div>
+        <button class="back-button" onclick="FactorQuadratics2RootsBackToAlgebraSelect()">Back</button>
+    </div>    
 
     <div id="CompleteTheSquare-screen" class="container" style="display:none;">
         <h1>Complete the square:</h1>
         <p id="CompleteTheSquare-question" class="question-text">x<sup>2</sup> + 6x + 9 = 0</p>
-        <input type="text" id="CompleteTheSquare-answer" placeholder="e.g. (x+_)^2 + _" onfocus="this.placeholder = ''" onblur="this.placeholder ='e.g. (x+_)^2 + _'" oninput="formatExponent()" style="width: 200px;">
-        <button onclick="checkCompleteTheSquareAnswer()">Submit</button>
+        <div class="input-button-wrapper">
+            <input type="text" id="CompleteTheSquare-answer" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder =''" oninput="formatExponent()" style="width: 200px;">
+            <button class="submit-button" onclick="checkCompleteTheSquareAnswer()">Submit</button>
+        </div>
         <p id="CompleteTheSquare-result"></p>
-        <button id="CompleteTheSquare-next-question" style="display:none;" onclick="generateCompleteTheSquareQuestion()">Next Question</button>
-        <button onclick="CompleteTheSquareBackToAlgebraSelect()">Back</button>
-    </div>    
+        <div><button id="CompleteTheSquare-next-question" style="display:none;" onclick="generateCompleteTheSquareQuestion()">Next Question</button></div>
+        <button class="back-button" onclick="CompleteTheSquareBackToAlgebraSelect()">Back</button>
+    </div>
+
+    <div id="DegreesRadians-screen" class="container" style="display:none;">
+        <p id="DegreesRadians-question" class="question-text"></p>
+        <div class="input-button-wrapper">
+            <input type="text" id="DegreesRadians-answer" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder =''" oninput="formatPiSymbol()">
+            <button class="submit-button" onclick="checkDegreesRadiansAnswer()">Submit</button>
+        </div>
+        <p id="DegreesRadians-result"></p>
+        <div><button id="DegreesRadians-next-question" style="display:none;" onclick="generateDegreesRadiansQuestion()">Next Question</button></div>
+        <button class="back-button" onclick="DegreesRadiansBackToTrigonometrySelect()">Back</button>
+        <div id="difficulty-button" style="display: flex; justify-content: center; margin-top: 20px;">
+            <button id="easy-button" class="button-selected" onclick="selectDifficulty('easy'); startDegreesRadians();">Easy</button>
+            <button id="medium-button" onclick="selectDifficulty('medium'); startDegreesRadiansMedium();">Medium</button>
+            <button id="hard-button" onclick="selectDifficulty('hard'); startDegreesRadiansHard();">Hard</button>
+        </div>
+    </div>
     
+    <div id="DegreesRadiansMedium-screen" class="container" style="display:none;">
+        <p id="DegreesRadiansMedium-question" class="question-text"></p>
+        <div class="input-button-wrapper">
+            <input type="text" id="DegreesRadiansMedium-answer" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder =''" oninput="formatPiSymbol()">
+            <button class="submit-button" onclick="checkDegreesRadiansMediumAnswer()">Submit</button>
+        </div>
+        <p id="DegreesRadiansMedium-result"></p>
+        <div><button id="DegreesRadiansMedium-next-question" style="display:none;" onclick="generateDegreesRadiansMediumQuestion()">Next Question</button></div>
+        <button class="back-button" onclick="DegreesRadiansMediumBackToTrigonometrySelect()">Back</button>
+        <div id="difficulty-button" style="display: flex; justify-content: center; margin-top: 20px;">
+            <button id="easy-button" onclick="selectDifficulty('easy'); startDegreesRadians();">Easy</button>
+            <button id="medium-button" class="button-selected" onclick="selectDifficulty('medium'); startDegreesRadiansMedium();">Medium</button>
+            <button id="hard-button" onclick="selectDifficulty('hard'); startDegreesRadiansHard();">Hard</button>
+        </div>
+    </div>
+
+    <div id="DegreesRadiansHard-screen" class="container" style="display:none;">
+        <p id="DegreesRadiansHard-question" class="question-text"></p>
+        <div class="input-button-wrapper">
+            <input type="text" id="DegreesRadiansHard-answer" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder =''" oninput="formatPiSymbol()">
+            <button class="submit-button" onclick="checkDegreesRadiansHardAnswer()">Submit</button>
+        </div>
+        <p id="DegreesRadiansHard-result"></p>
+        <div><button id="DegreesRadiansHard-next-question" style="display:none;" onclick="generateDegreesRadiansHardQuestion()">Next Question</button></div>
+        <button class="back-button" onclick="DegreesRadiansHardBackToTrigonometrySelect()">Back</button>
+        <div id="difficulty-button" style="display: flex; justify-content: center; margin-top: 20px;">
+            <button id="easy-button" onclick="selectDifficulty('easy'); startDegreesRadians();">Easy</button>
+            <button id="medium-button" onclick="selectDifficulty('medium'); startDegreesRadiansMedium();">Medium</button>
+            <button id="hard-button" class="button-selected" onclick="selectDifficulty('hard'); startDegreesRadiansHard();">Hard</button>
+        </div>
+    </div>
+
     <div id="UnitCircleQuiz-screen" class="container" style="display:none;">
         <p id="UnitCircleQuiz-question" class="question-text"></p>
-        <input type="text" id="UnitCircleQuiz-answer" placeholder="e.g. 1/2" onfocus="this.placeholder = ''" onblur="this.placeholder ='e.g. √3/2'">
-        <button onclick="checkUnitCircleQuizAnswer()">Submit</button>
+        <div class="input-button-wrapper">
+            <input type="text" id="UnitCircleQuiz-answer" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder =''">
+            <button class="submit-button" onclick="checkUnitCircleQuizAnswer()">Submit</button>
+        </div>
         <p id="UnitCircleQuiz-result"></p>
-        <button id="UnitCircleQuiz-next-question" style="display:none;" onclick="generateUnitCircleQuizQuestion()">Next Question</button>
-        <button onclick="UnitCircleQuizBackToTrigonometrySelect()">Back</button>
-    </div>  
+        <div><button id="UnitCircleQuiz-next-question" style="display:none;" onclick="generateUnitCircleQuizQuestion()">Next Question</button></div>
+        <button class="back-button" onclick="UnitCircleQuizBackToTrigonometrySelect()">Back</button>
+    </div>
     
     <div id="DoubleAngleIdentitiesEasy-screen" class="container" style="display:none;">
         <p id="DoubleAngleIdentitiesEasy-question" class="question-text"></p>
-        <input type="text" id="DoubleAngleIdentitiesEasy-answer" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder =''">
-        <button onclick="checkDoubleAngleIdentitiesEasyAnswer()">Submit</button>
+        <div class="input-button-wrapper">
+            <input type="text" id="DoubleAngleIdentitiesEasy-answer" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder =''">
+            <button class="submit-button" onclick="checkDoubleAngleIdentitiesEasyAnswer()">Submit</button>
+        </div>
         <p id="DoubleAngleIdentitiesEasy-result"></p>
-        <button id="DoubleAngleIdentitiesEasy-next-question" style="display:none;" onclick="generateDoubleAngleIdentitiesEasyQuestion()">Next Question</button>
-        <button onclick="DoubleAngleIdentitiesEasyBackToTrigonometrySelect()">Back</button>
-    </div>  
-    <div id="DoubleAngleIdentitiesEasy-difficulty" style="display:none;">
-        <button id="easy-button" class="button-selected" onclick="startDoubleAngleIdentitiesEasy()">Easy</button>
-        <button id="medium-button" onclick="selectDifficulty('medium'); startDoubleAngleIdentitiesMedium();">Medium</button>
-        <button id="hard-button" onclick="selectDifficulty('hard')">Hard</button>
-    </div>    
+        <div><button id="DoubleAngleIdentitiesEasy-next-question" style="display:none;" onclick="generateDoubleAngleIdentitiesEasyQuestion()">Next Question</button></div>
+        <button class="back-button" onclick="DoubleAngleIdentitiesEasyBackToTrigonometrySelect()">Back</button>
+    
+        <div id="difficulty-button" style="display: flex; justify-content: center; margin-top: 20px;">
+            <button id="easy-button" class="button-selected" onclick="selectDifficulty('easy'); startDoubleAngleIdentitiesEasy();">Easy</button>
+            <button id="medium-button" onclick="selectDifficulty('medium'); startDoubleAngleIdentitiesMedium();">Medium</button>
+            <button id="hard-button" onclick="selectDifficulty('hard'); startDoubleAngleIdentitiesHard();">Hard</button>
+        </div>
+    </div>     
       
     <div id="DoubleAngleIdentitiesMedium-screen" class="container" style="display:none;">
         <p id="DoubleAngleIdentitiesMedium-question" class="question-text"></p>
-        <input type="text" id="DoubleAngleIdentitiesMedium-answer" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder =''">
-        <button onclick="checkDoubleAngleIdentitiesMediumAnswer()">Submit</button>
+        <div class="input-button-wrapper">
+            <input type="text" id="DoubleAngleIdentitiesMedium-answer" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder =''" oninput="formatExponentMedium()">
+            <button class="submit-button" onclick="checkDoubleAngleIdentitiesMediumAnswer()">Submit</button>
+        </div>
         <p id="DoubleAngleIdentitiesMedium-result"></p>
-        <button id="DoubleAngleIdentitiesMedium-next-question" style="display:none;" onclick="generateDoubleAngleIdentitiesMediumQuestion()">Next Question</button>
-        <button onclick="DoubleAngleIdentitiesMediumBackToTrigonometrySelect()">Back</button>
-    </div>
+        <div><button id="DoubleAngleIdentitiesMedium-next-question" style="display:none;" onclick="generateDoubleAngleIdentitiesMediumQuestion()">Next Question</button></div>
+        <button class="back-button" onclick="DoubleAngleIdentitiesMediumBackToTrigonometrySelect()">Back</button>
+        <div id="difficulty-button" style="display: flex; justify-content: center; margin-top: 20px;">
+            <button id="easy-button" onclick="selectDifficulty('easy'); startDoubleAngleIdentitiesEasy();">Easy</button>
+            <button id="medium-button" class="button-selected" onclick="selectDifficulty('medium'); startDoubleAngleIdentitiesMedium();">Medium</button>
+            <button id="hard-button" onclick="selectDifficulty('hard'); startDoubleAngleIdentitiesHard();">Hard</button>
+        </div>
+    </div>        
+
+    <div id="DoubleAngleIdentitiesHard-screen" class="container" style="display:none;">
+        <p id="DoubleAngleIdentitiesHard-question" class="question-text"></p>
+        <div class="input-button-wrapper">
+            <input type="text" id="DoubleAngleIdentitiesHard-answer" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder =''">
+            <button class="submit-button" onclick="checkDoubleAngleIdentitiesHardAnswer()">Submit</button>
+        </div>
+        <p id="DoubleAngleIdentitiesHard-result"></p>
+        <button id="DoubleAngleIdentitiesHard-next-question" style="display:none;" onclick="generateDoubleAngleIdentitiesHardQuestion()">Next Question</button>
+        <button class="back-button" onclick="DoubleHardBackToTrigonometrySelect()">Back</button>
+    </div> 
 
     <script src="script.js"></script>
 </body>
