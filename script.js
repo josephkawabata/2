@@ -391,10 +391,13 @@ function startDegreesRadians() {
     document.getElementById('DegreesRadiansHard-screen').style.display = 'none';
     document.getElementById('DegreesRadians-screen').style.display = 'block';
     document.getElementById('explanation-box').innerHTML = "Just degrees to radians<br><br>Type pi to type π";
-    document.getElementById('DegreesRadians-answer').oninput = formatPiSymbol; // Corrected to attach only formatPiSymbol
+    document.getElementById('DegreesRadians-answer').oninput = formatPiSymbol;
     document.getElementById('difficulty-button').style.display = 'block';
     selectDifficulty('easy');
     generateDegreesRadiansQuestion();
+    const teachBox = document.getElementById('teach-box');
+    teachBox.style.display = 'flex';
+    teachBox.innerHTML = 'Look up a unit circle if you need help!';
 }
 
 function formatPiSymbol(event) {
@@ -445,7 +448,7 @@ function generateDegreesRadiansQuestion() {
     lastDegreesRadiansQuestion = randomDegree;
 
     // Set the question text and the correct answer
-    const questionText = `How many radians is ${randomDegree} degrees?`;
+    const questionText = `How many radians are ${randomDegree} degrees?`;
     window.currentAnswer = degreesToRadians[randomDegree];
 
     // Update the UI elements
@@ -492,7 +495,18 @@ function startDegreesRadiansMedium() {
     document.getElementById('explanation-box').innerHTML = "Degrees to radians <br>AND radians to degrees<br><br>Type pi to type π";
     document.getElementById('DegreesRadiansMedium-answer').oninput = formatPiSymbol; 
     selectDifficulty('medium'); // Highlight medium button
-    generateDegreesRadiansMediumQuestion(); // Generate a question for medium difficulty
+    generateDegreesRadiansMediumQuestion();
+    const teachBox = document.getElementById('teach-box');
+    teachBox.style.display = 'flex';
+    teachBox.innerHTML = `
+     <div style="display: block; text-align: center; max-width: 90%; word-wrap: break-word; overflow: hidden; margin: 0 auto;">
+        To convert radians to degrees, multiply the number of radians by \\( \\frac{180}{\\pi} \\).
+        \\[
+            {\\scriptsize\\text{eg. }\\frac{\\pi}{2}\\text{ radians} \\times \\frac{180}{\\pi} = 90 \\text{ degrees}}
+        \\]
+    </div>
+`;
+MathJax.typeset();
 }
 
 let isDegreesToRadiansMediumNext = false; // Start with radians for medium questions
@@ -529,13 +543,13 @@ function generateDegreesRadiansMediumQuestion() {
     // Set question and answer based on the alternating question type
     let questionText;
     if (isDegreesToRadiansMediumNext) {
-        questionText = `How many radians is ${randomDegree} degrees?`;
+        questionText = `How many radians are ${randomDegree} degrees?`;
         window.currentAnswer = degreesToRadians[randomDegree];
     } else {
         // Find the corresponding degree for a given radian
         const radiansToDegrees = Object.fromEntries(Object.entries(degreesToRadians).map(([deg, rad]) => [rad, deg]));
         const randomRadian = degreesToRadians[randomDegree];
-        questionText = `How many degrees is ${randomRadian} radians?`;
+        questionText = `How many degrees are ${randomRadian} radians?`;
         window.currentAnswer = radiansToDegrees[randomRadian];
     }
 
@@ -588,14 +602,14 @@ function generateDegreesRadiansHardQuestion() {
         if (isDegreesToRadiansHardNext) {
             // Generate a random degree value between 0.1 and 720
             randomValue = (Math.random() * (720 - 0.1) + 0.1).toFixed(1);
-            questionText = `How many radians is ${randomValue} degrees?`;
+            questionText = `How many radians are ${randomValue} degrees?`;
             window.currentAnswer = parseFloat((parseFloat(randomValue) * (Math.PI / 180)).toFixed(2)); // Convert and keep only 2 decimal points
         } else {
             // Generate a random radian value between 0.1 and 4π, in increments of 0.1
             const maxRadians = 4 * Math.PI; // Maximum value of 4π
             randomValue = (Math.random() * (maxRadians - 0.1) + 0.1);
             randomValue = (Math.round(randomValue * 10) / 10).toFixed(1); // Round to nearest increment of 0.1
-            questionText = `How many degrees is ${randomValue} radians?`;
+            questionText = `How many degrees are ${randomValue} radians?`;
             window.currentAnswer = parseFloat((parseFloat(randomValue) * (180 / Math.PI)).toFixed(2)); // Convert and keep only 2 decimal points
         }
     } while (questionText === lastDegreesRadiansQuestion); // Ensure the new question is different from the last one
@@ -890,18 +904,21 @@ function DegreesRadiansBackToTrigonometrySelect() {
     document.getElementById('DegreesRadians-screen').style.display = 'none';
     document.getElementById('trigonometry-select-screen').style.display = 'block';
     document.getElementById('explanation-box').innerHTML = "Welcome to Math Practice!<br><br> Choose the type of problem you'd like to improve on.";
+    document.getElementById('teach-box').style.display = 'none'; // Hide the teach box
 }
 
 function DegreesRadiansMediumBackToTrigonometrySelect() {
     document.getElementById('DegreesRadiansMedium-screen').style.display = 'none';
     document.getElementById('trigonometry-select-screen').style.display = 'block';
     document.getElementById('explanation-box').innerHTML = "Welcome to Math Practice!<br><br> Choose the type of problem you'd like to improve on.";
+    document.getElementById('teach-box').style.display = 'none';
 }
 
 function DegreesRadiansHardBackToTrigonometrySelect() {
     document.getElementById('DegreesRadiansHard-screen').style.display = 'none';
     document.getElementById('trigonometry-select-screen').style.display = 'block';
     document.getElementById('explanation-box').innerHTML = "Welcome to Math Practice!<br><br> Choose the type of problem you'd like to improve on.";
+    document.getElementById('teach-box').style.display = 'none';
 }
 
 function UnitCircleQuizBackToTrigonometrySelect() {
