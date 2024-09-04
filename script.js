@@ -10,6 +10,17 @@ let lastDoubleAngleIdentitiesEasyQuestion = '';
 let lastDoubleAngleIdentitiesMediumQuestion = '';
 let lastDegreesRadiansQuestion = '';
 
+// Initialize the flag to track if an answer has been attempted
+window.hasAttemptedAnswer = false;
+
+// Add the global event listener for Cmd+Enter or Ctrl+Enter
+document.addEventListener('keydown', function (event) {
+   // Allow going to the next question only if an answer has been attempted
+   if (event.key === 'Enter' && (event.metaKey || event.ctrlKey) && window.hasAttemptedAnswer) {
+       // Click the visible "Next Question" button, if any
+       document.querySelector('.next-question-button:visible')?.click();
+   }
+});
 
 // Initialize the home screen when the page loads
 window.onload = function() {
@@ -74,11 +85,27 @@ function startArithmetic() {
 
     document.getElementById('arithmetic-select-screen').style.display = 'none';
     document.getElementById('arithmetic-screen').style.display = 'block';
-    document.getElementById('explanation-box').textContent = 'Simple stuff';
+    document.getElementById('explanation-box').textContent = 'Welcome to kindergarten';
+    document.getElementById('arithmetic-answer').focus(); // Automatically focus the input box
+    document.getElementById('arithmetic-answer').onkeydown = function(event) {
+        if (event.key === 'Enter') {
+            checkArithmeticAnswer();
+        }
+    };
+
+    // Add this specific event listener for Cmd+Enter or Ctrl+Enter for arithmetic questions
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && (event.metaKey || event.ctrlKey) && window.hasAttemptedAnswer) {
+            // Only trigger the next question button if the answer has been attempted
+            document.getElementById('arithmetic-next-question').click();
+        }
+    });
+
     generateArithmeticQuestion();
 }
 
 function generateArithmeticQuestion() {
+    window.hasAttemptedAnswer = false;
     let digit1, digit2, questionText;
     
     do {
@@ -119,6 +146,7 @@ function generateArithmeticQuestion() {
     document.getElementById('arithmetic-result').textContent = '';
     document.getElementById('arithmetic-answer').value = '';
     document.getElementById('arithmetic-next-question').style.display = 'none';
+    document.getElementById('arithmetic-answer').focus(); // Automatically focus the input box
 }
 
 function checkArithmeticAnswer() {
@@ -126,6 +154,8 @@ function checkArithmeticAnswer() {
     const resultText = userAnswer === window.currentAnswer ? 'Correct!' : `Nope, answer is ${window.currentAnswer}.`;
     document.getElementById('arithmetic-result').textContent = resultText;
     document.getElementById('arithmetic-next-question').style.display = 'inline';
+    document.getElementById('arithmetic-answer').blur();
+    window.hasAttemptedAnswer = true; // Set flag to true after checking the answer
 }
 
 function startBasicAlgebra() {
@@ -137,6 +167,17 @@ function startBasicAlgebra() {
     document.getElementById('algebra-select-screen').style.display = 'none';
     document.getElementById('basic-algebra-screen').style.display = 'block';
     document.getElementById('explanation-box').textContent = 'Enter the value of x that solves the equation.';
+    document.getElementById('basic-algebra-answer').focus();
+    document.getElementById('basic-algebra-answer').onkeydown = function(event) {
+        if (event.key === 'Enter') {
+            checkBasicAlgebraAnswer();
+        }
+    };
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) { // Detect Cmd (Mac) or Ctrl (Windows)
+            document.getElementById('basic-algebra-next-question').click();
+        }
+    });
     generateBasicAlgebraQuestion();
 }
 
@@ -175,6 +216,7 @@ function generateBasicAlgebraQuestion() {
     document.getElementById('basic-algebra-result').textContent = '';
     document.getElementById('basic-algebra-answer').value = '';
     document.getElementById('basic-algebra-next-question').style.display = 'none';
+    document.getElementById('basic-algebra-answer').focus();
 }
 
 function checkBasicAlgebraAnswer() {
@@ -182,6 +224,7 @@ function checkBasicAlgebraAnswer() {
     const resultText = userAnswer === window.currentAnswer ? 'Correct!' : `Nope, answer is ${window.currentAnswer}.`;
     document.getElementById('basic-algebra-result').textContent = resultText;
     document.getElementById('basic-algebra-next-question').style.display = 'inline';
+    document.getElementById('basic-algebra-answer').blur();
 }
 
 function startFactorQuadraticsOneRootEasy() {
@@ -189,7 +232,19 @@ function startFactorQuadraticsOneRootEasy() {
     document.getElementById('FactorQuadraticsOneRootMedium-screen').style.display = 'none';
     document.getElementById('FactorQuadraticsOneRootEasy-screen').style.display = 'block';
     document.getElementById('explanation-box').innerHTML = 'Enter the value of x that solves the equation. <br> <br> The quadratic formula is not needed here; just factor.';
-    selectDifficultyUpToMedium('easy');
+    document.getElementById('difficulty-button').style.display = 'flex';
+    document.getElementById('FactorQuadraticsOneRootEasy-answer').focus();
+    document.getElementById('FactorQuadraticsOneRootEasy-answer').onkeydown = function(event) {
+        if (event.key === 'Enter') {
+            checkFactorQuadraticsOneRootEasyAnswer();
+        }
+    };
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) { // Detect Cmd (Mac) or Ctrl (Windows)
+            document.getElementById('FactorQuadraticsOneRootEasy-next-question').click();
+        }
+    });
+    selectDifficulty('easy');
     generateFactorQuadraticsOneRootEasyQuestion();
 }
 
@@ -217,6 +272,7 @@ function generateFactorQuadraticsOneRootEasyQuestion() {
     document.getElementById('FactorQuadraticsOneRootEasy-result').textContent = '';
     document.getElementById('FactorQuadraticsOneRootEasy-answer').value = '';
     document.getElementById('FactorQuadraticsOneRootEasy-next-question').style.display = 'none';
+    document.getElementById('FactorQuadraticsOneRootEasy-answer').focus();
 }
 
 function checkFactorQuadraticsOneRootEasyAnswer() {
@@ -224,11 +280,23 @@ function checkFactorQuadraticsOneRootEasyAnswer() {
     const resultText = userAnswer === window.currentAnswer ? 'Correct!' : `Nope, answer is ${window.currentAnswer}.`;
     document.getElementById('FactorQuadraticsOneRootEasy-result').textContent = resultText;
     document.getElementById('FactorQuadraticsOneRootEasy-next-question').style.display = 'inline';
+    document.getElementById('FactorQuadraticsOneRootEasy-answer').blur();
 }
 
 function startFactorQuadraticsOneRootMedium() {
     document.getElementById('FactorQuadraticsOneRootEasy-screen').style.display = 'none';
     document.getElementById('FactorQuadraticsOneRootMedium-screen').style.display = 'block';
+    document.getElementById('FactorQuadraticsOneRootMedium-answer').focus();
+    document.getElementById('FactorQuadraticsOneRootMedium-answer').onkeydown = function(event) {
+        if (event.key === 'Enter') {
+            checkFactorQuadraticsOneRootMediumAnswer();
+        }
+    };
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) { // Detect Cmd (Mac) or Ctrl (Windows)
+            document.getElementById('FactorQuadraticsOneRootMedium-next-question').click();
+        }
+    });
     generateFactorQuadraticsOneRootMediumQuestion();
 }
 
@@ -257,6 +325,7 @@ function generateFactorQuadraticsOneRootMediumQuestion() {
     document.getElementById('FactorQuadraticsOneRootMedium-result').textContent = '';
     document.getElementById('FactorQuadraticsOneRootMedium-answer').value = '';
     document.getElementById('FactorQuadraticsOneRootMedium-next-question').style.display = 'none';
+    document.getElementById('FactorQuadraticsOneRootMedium-answer').focus();
 }
 
 function checkFactorQuadraticsOneRootMediumAnswer() {
@@ -264,12 +333,24 @@ function checkFactorQuadraticsOneRootMediumAnswer() {
     const resultText = userAnswer === window.currentAnswer ? 'Correct!' : `Nope, answer is ${window.currentAnswer}.`;
     document.getElementById('FactorQuadraticsOneRootMedium-result').textContent = resultText;
     document.getElementById('FactorQuadraticsOneRootMedium-next-question').style.display = 'inline';
+    document.getElementById('FactorQuadraticsOneRootMedium-answer').blur();
 }
 
 function startFactorQuadratics2Roots() {
     document.getElementById('algebra-select-screen').style.display = 'none';
     document.getElementById('FactorQuadratics2Roots-screen').style.display = 'block';
     document.getElementById('explanation-box').innerHTML = 'Enter the 2 values of x that solve the equation, separated by a comma. <br> <br> The quadratic formula is not needed here; just factor.';
+    document.getElementById('FactorQuadratics2Roots-answer').focus();
+    document.getElementById('FactorQuadratics2Roots-answer').onkeydown = function(event) {
+        if (event.key === 'Enter') {
+            checkFactorQuadratics2RootsAnswer();
+        }
+    };
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) { // Detect Cmd (Mac) or Ctrl (Windows)
+            document.getElementById('FactorQuadratics2Roots-next-question').click();
+        }
+    });
     generateFactorQuadratics2RootsQuestion();
 }
 
@@ -302,6 +383,7 @@ function generateFactorQuadratics2RootsQuestion() {
     document.getElementById('FactorQuadratics2Roots-result').textContent = '';
     document.getElementById('FactorQuadratics2Roots-answer').value = '';
     document.getElementById('FactorQuadratics2Roots-next-question').style.display = 'none';
+    document.getElementById('FactorQuadratics2Roots-answer').focus();
 }
 
 function checkFactorQuadratics2RootsAnswer() {
@@ -317,12 +399,24 @@ function checkFactorQuadratics2RootsAnswer() {
     const resultText = isCorrect ? 'Correct!' : `Nope, answer is ${window.currentAnswer.join(', ')}.`;
     document.getElementById('FactorQuadratics2Roots-result').textContent = resultText;
     document.getElementById('FactorQuadratics2Roots-next-question').style.display = 'inline';
+    document.getElementById('FactorQuadratics2Roots-answer').blur();
 }
 
 function startCompleteTheSquare() {
     document.getElementById('algebra-select-screen').style.display = 'none';
     document.getElementById('CompleteTheSquare-screen').style.display = 'block';
     document.getElementById('explanation-box').textContent = 'Your answer should be in the form (x+_)² + _';
+    
+    document.getElementById('CompleteTheSquare-answer').onkeydown = function(event) {
+        if (event.key === 'Enter') {
+            checkCompleteTheSquareAnswer();
+        }
+    };
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) { // Detect Cmd (Mac) or Ctrl (Windows)
+            document.getElementById('CompleteTheSquare-next-question').click();
+        }
+    });
     generateCompleteTheSquareQuestion();
 }
 
@@ -361,6 +455,7 @@ function generateCompleteTheSquareQuestion() {
     document.getElementById('CompleteTheSquare-result').textContent = '';
     document.getElementById('CompleteTheSquare-answer').value = '';
     document.getElementById('CompleteTheSquare-next-question').style.display = 'none';
+    document.getElementById('CompleteTheSquare-answer').focus();
 }
 
 function formatExponent() {
@@ -383,6 +478,7 @@ function checkCompleteTheSquareAnswer() {
     const resultText = standardizedAnswer === correctAnswer ? 'Correct!' : `Nope, answer is ${window.currentAnswer}.`;
     document.getElementById('CompleteTheSquare-result').textContent = resultText;
     document.getElementById('CompleteTheSquare-next-question').style.display = 'inline';
+    document.getElementById('CompleteTheSquare-answer').blur();
 }
 
 function startDegreesRadians() {
@@ -393,11 +489,21 @@ function startDegreesRadians() {
     document.getElementById('explanation-box').innerHTML = "Just degrees to radians<br><br>Type pi to type π";
     document.getElementById('DegreesRadians-answer').oninput = formatPiSymbol;
     document.getElementById('difficulty-button').style.display = 'block';
+    document.getElementById('DegreesRadians-answer').onkeydown = function(event) {
+        if (event.key === 'Enter') {
+            checkDegreesRadiansAnswer();
+        }
+    };
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) { // Detect Cmd (Mac) or Ctrl (Windows)
+            document.getElementById('DegreesRadians-next-question').click();
+        }
+    });
     selectDifficulty('easy');
     generateDegreesRadiansQuestion();
-    const teachBox = document.getElementById('teach-box');
-    teachBox.style.display = 'flex';
-    teachBox.innerHTML = 'Look up a unit circle if you need help!';
+    //const teachBox = document.getElementById('teach-box');
+    //teachBox.style.display = 'flex';
+   // teachBox.innerHTML = 'Look up a unit circle if you need help!';
 }
 
 function formatPiSymbol(event) {
@@ -456,6 +562,7 @@ function generateDegreesRadiansQuestion() {
     document.getElementById('DegreesRadians-result').textContent = '';
     document.getElementById('DegreesRadians-answer').value = '';
     document.getElementById('DegreesRadians-next-question').style.display = 'none';
+    document.getElementById('DegreesRadians-answer').focus();
 }
 
 function checkDegreesRadiansAnswer() {
@@ -473,6 +580,7 @@ function checkDegreesRadiansAnswer() {
 
     document.getElementById('DegreesRadians-result').textContent = resultText;
     document.getElementById('DegreesRadians-next-question').style.display = 'inline';
+    document.getElementById('DegreesRadians-answer').blur();
 }
 
 // Function to evaluate equivalent fractions
@@ -494,19 +602,18 @@ function startDegreesRadiansMedium() {
     document.getElementById('DegreesRadiansHard-screen').style.display = 'none';
     document.getElementById('explanation-box').innerHTML = "Degrees to radians <br>AND radians to degrees<br><br>Type pi to type π";
     document.getElementById('DegreesRadiansMedium-answer').oninput = formatPiSymbol; 
+    document.getElementById('DegreesRadiansMedium-answer').onkeydown = function(event) {
+        if (event.key === 'Enter') {
+            checkDegreesRadiansMediumAnswer();
+        }
+    };
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) { // Detect Cmd (Mac) or Ctrl (Windows)
+            document.getElementById('DegreesRadiansMedium-next-question').click();
+        }
+    });
     selectDifficulty('medium'); // Highlight medium button
     generateDegreesRadiansMediumQuestion();
-    const teachBox = document.getElementById('teach-box');
-    teachBox.style.display = 'flex';
-    teachBox.innerHTML = `
-     <div style="display: block; text-align: center; max-width: 90%; word-wrap: break-word; overflow: hidden; margin: 0 auto;">
-        To convert radians to degrees, multiply the number of radians by \\( \\frac{180}{\\pi} \\).
-        \\[
-            {\\scriptsize\\text{eg. }\\frac{\\pi}{2}\\text{ radians} \\times \\frac{180}{\\pi} = 90 \\text{ degrees}}
-        \\]
-    </div>
-`;
-MathJax.typeset();
 }
 
 let isDegreesToRadiansMediumNext = false; // Start with radians for medium questions
@@ -561,6 +668,7 @@ function generateDegreesRadiansMediumQuestion() {
     document.getElementById('DegreesRadiansMedium-result').textContent = '';
     document.getElementById('DegreesRadiansMedium-answer').value = '';
     document.getElementById('DegreesRadiansMedium-next-question').style.display = 'none';
+    document.getElementById('DegreesRadiansMedium-answer').focus();
 }
 
 function checkDegreesRadiansMediumAnswer() {
@@ -581,6 +689,7 @@ function checkDegreesRadiansMediumAnswer() {
 
     document.getElementById('DegreesRadiansMedium-result').textContent = resultText;
     document.getElementById('DegreesRadiansMedium-next-question').style.display = 'inline';
+    document.getElementById('DegreesRadiansMedium-answer').blur();
 }
 
 function startDegreesRadiansHard() {
@@ -589,6 +698,16 @@ function startDegreesRadiansHard() {
     document.getElementById('DegreesRadiansHard-screen').style.display = 'block';
     document.getElementById('difficulty-button').style.display = 'block'; // Show difficulty
     document.getElementById('explanation-box').innerHTML = "Round to 2 decimal points";
+    document.getElementById('DegreesRadiansHard-answer').onkeydown = function(event) {
+        if (event.key === 'Enter') {
+            checkDegreesRadiansHardAnswer();
+        }
+    };
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) { // Detect Cmd (Mac) or Ctrl (Windows)
+            document.getElementById('DegreesRadiansHard-next-question').click();
+        }
+    });
     selectDifficulty('hard');
     generateDegreesRadiansHardQuestion(); // Start generating the hard questions
 }
@@ -623,6 +742,7 @@ function generateDegreesRadiansHardQuestion() {
     document.getElementById('DegreesRadiansHard-result').textContent = '';
     document.getElementById('DegreesRadiansHard-answer').value = '';
     document.getElementById('DegreesRadiansHard-next-question').style.display = 'none';
+    document.getElementById('DegreesRadiansHard-answer').focus();
 }
 
 function checkDegreesRadiansHardAnswer() {
@@ -635,6 +755,7 @@ function checkDegreesRadiansHardAnswer() {
     const resultText = isCorrect ? 'Correct!' : `Nope, the answer is ${correctAnswer}.`;
     document.getElementById('DegreesRadiansHard-result').textContent = resultText;
     document.getElementById('DegreesRadiansHard-next-question').style.display = 'inline';
+    document.getElementById('DegreesRadiansHard-answer').blur();
 }
 
 // New function to compare pi expressions
@@ -653,6 +774,16 @@ function startUnitCircleQuiz() {
     document.getElementById('UnitCircleQuiz-screen').style.display = 'block';
     document.getElementById('explanation-box').innerHTML = "Your answer should either be a whole number or a fraction. <br> <br> Type sqrt to type √.";
     document.getElementById('UnitCircleQuiz-answer').oninput = formatSquareRoot;
+    document.getElementById('UnitCircleQuiz-answer').onkeydown = function(event) {
+        if (event.key === 'Enter') {
+            checkUnitCircleQuizAnswer();
+        }
+    };
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) { // Detect Cmd (Mac) or Ctrl (Windows)
+            document.getElementById('UnitCircleQuiz-next-question').click();
+        }
+    });
     generateUnitCircleQuizQuestion();
 }
 
@@ -722,6 +853,7 @@ function generateUnitCircleQuizQuestion() {
     document.getElementById('UnitCircleQuiz-result').textContent = '';
     document.getElementById('UnitCircleQuiz-answer').value = '';
     document.getElementById('UnitCircleQuiz-next-question').style.display = 'none';
+    document.getElementById('UnitCircleQuiz-answer').focus();
 }
 
 function checkUnitCircleQuizAnswer() {
@@ -730,6 +862,7 @@ function checkUnitCircleQuizAnswer() {
     const resultText = userAnswer === window.currentAnswer ? 'Correct!' : `Nope, answer is ${window.currentAnswer}.`;
     document.getElementById('UnitCircleQuiz-result').textContent = resultText;
     document.getElementById('UnitCircleQuiz-next-question').style.display = 'inline';
+    document.getElementById('UnitCircleQuiz-answer').blur();
 }
 
 function startDoubleAngleIdentitiesEasy() {
@@ -738,6 +871,16 @@ function startDoubleAngleIdentitiesEasy() {
     document.getElementById('DoubleAngleIdentitiesEasy-screen').style.display = 'block';
     document.getElementById('difficulty-button').style.display = 'block';
     document.getElementById('explanation-box').innerHTML = "Enter a double angle identity.";
+    document.getElementById('DoubleAngleIdentitiesEasy-answer').onkeydown = function(event) {
+        if (event.key === 'Enter') {
+            checkDoubleAngleIdentitiesEasyAnswer();
+        }
+    };
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) { // Detect Cmd (Mac) or Ctrl (Windows)
+            document.getElementById('DoubleAngleIdentitiesEasy-next-question').click();
+        }
+    });
     selectDifficulty('easy');
     generateDoubleAngleIdentitiesEasyQuestion();
 }
@@ -762,6 +905,7 @@ function generateDoubleAngleIdentitiesEasyQuestion() {
     document.getElementById('DoubleAngleIdentitiesEasy-result').textContent = '';
     document.getElementById('DoubleAngleIdentitiesEasy-answer').value = '';
     document.getElementById('DoubleAngleIdentitiesEasy-next-question').style.display = 'none';
+    document.getElementById('DoubleAngleIdentitiesEasy-answer').focus();
 }
 
 function checkDoubleAngleIdentitiesEasyAnswer() {
@@ -775,12 +919,23 @@ function checkDoubleAngleIdentitiesEasyAnswer() {
     const resultText = userAnswer === correctAnswer ? 'Correct!' : `Nope, answer is ${window.currentAnswer}.`;
     document.getElementById('DoubleAngleIdentitiesEasy-result').textContent = resultText;
     document.getElementById('DoubleAngleIdentitiesEasy-next-question').style.display = 'inline';
+    document.getElementById('DoubleAngleIdentitiesEasy-answer').blur();
 }
 
 function startDoubleAngleIdentitiesMedium() {
     document.getElementById('DoubleAngleIdentitiesEasy-screen').style.display = 'none';
     document.getElementById('DoubleAngleIdentitiesMedium-screen').style.display = 'block';
     document.getElementById('difficulty-button').style.display = 'block'; // Show difficulty buttons
+    document.getElementById('DoubleAngleIdentitiesMedium-answer').onkeydown = function(event) {
+        if (event.key === 'Enter') {
+            checkDoubleAngleIdentitiesMediumAnswer();
+        }
+    };
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) { // Detect Cmd (Mac) or Ctrl (Windows)
+            document.getElementById('DoubleAngleIdentitiesMedium-next-question').click();
+        }
+    });
     selectDifficulty('medium');
     generateDoubleAngleIdentitiesMediumQuestion();
 }
@@ -807,6 +962,7 @@ function generateDoubleAngleIdentitiesMediumQuestion() {
     document.getElementById('DoubleAngleIdentitiesMedium-result').textContent = '';
     document.getElementById('DoubleAngleIdentitiesMedium-answer').value = '';
     document.getElementById('DoubleAngleIdentitiesMedium-next-question').style.display = 'none';
+    document.getElementById('DoubleAngleIdentitiesMedium-answer').focus();
 }
 
 function formatExponentMedium() {
@@ -835,6 +991,7 @@ function checkDoubleAngleIdentitiesMediumAnswer() {
     const resultText = isCorrect ? 'Correct!' : `Nope, answer is ${window.currentAnswers[0]}.`;
     document.getElementById('DoubleAngleIdentitiesMedium-result').textContent = resultText;
     document.getElementById('DoubleAngleIdentitiesMedium-next-question').style.display = 'inline';
+    document.getElementById('DoubleAngleIdentitiesMedium-answer').blur();
 }
 
 function startDoubleAngleIdentitiesHard() {
@@ -950,16 +1107,5 @@ function selectDifficulty(difficulty) {
         document.getElementById('medium-button').classList.add('button-selected');
     } else if (difficulty === 'hard') {
         document.getElementById('hard-button').classList.add('button-selected');
-    }
-}
-
-function selectDifficultyUpToMedium(difficulty) {
-    document.getElementById('easy-button').classList.remove('button-selected');
-    document.getElementById('medium-button').classList.remove('button-selected');
-    
-    if (difficulty === 'easy') {
-        document.getElementById('easy-button').classList.add('button-selected');
-    } else {
-        document.getElementById('medium-button').classList.add('button-selected');
     }
 }
